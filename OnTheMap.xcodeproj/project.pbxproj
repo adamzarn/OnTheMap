@@ -8,12 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		DB163A231D3D31D30019A316 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB163A221D3D31D30019A316 /* AppDelegate.swift */; };
-		DB163A251D3D31D30019A316 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB163A241D3D31D30019A316 /* ViewController.swift */; };
+		DB163A251D3D31D30019A316 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB163A241D3D31D30019A316 /* LoginViewController.swift */; };
 		DB163A281D3D31D30019A316 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB163A261D3D31D30019A316 /* Main.storyboard */; };
 		DB163A2A1D3D31D30019A316 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB163A291D3D31D30019A316 /* Assets.xcassets */; };
 		DB163A2D1D3D31D30019A316 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB163A2B1D3D31D30019A316 /* LaunchScreen.storyboard */; };
 		DB163A381D3D31D30019A316 /* OnTheMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB163A371D3D31D30019A316 /* OnTheMapTests.swift */; };
 		DB163A431D3D31D30019A316 /* OnTheMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB163A421D3D31D30019A316 /* OnTheMapUITests.swift */; };
+		DB163A511D3D629F0019A316 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB163A501D3D629F0019A316 /* MapKit.framework */; };
+		DB311E281D3E905200810814 /* MyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB311E271D3E905200810814 /* MyTextField.swift */; };
+		DB866D881D3FC33700B8C534 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB866D871D3FC33700B8C534 /* MapViewController.swift */; };
+		DB866D8A1D3FC34600B8C534 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB866D891D3FC34600B8C534 /* TableViewController.swift */; };
+		DB866D8C1D4167C300B8C534 /* MyTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB866D8B1D4167C300B8C534 /* MyTableCell.swift */; };
+		DBB4B3E71D3E9C6E0093A07D /* InformationPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3E61D3E9C6E0093A07D /* InformationPostingViewController.swift */; };
+		DBB4B3F01D3EC15A0093A07D /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3EF1D3EC15A0093A07D /* UdacityClient.swift */; };
+		DBB4B3F21D3EC16C0093A07D /* UdacityConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3F11D3EC16B0093A07D /* UdacityConvenience.swift */; };
+		DBB4B3F41D3EC2A10093A07D /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3F31D3EC2A10093A07D /* UdacityConstants.swift */; };
+		DBB4B3F61D3ECF180093A07D /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3F51D3ECF180093A07D /* GCDBlackBox.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +46,7 @@
 /* Begin PBXFileReference section */
 		DB163A1F1D3D31D20019A316 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB163A221D3D31D30019A316 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DB163A241D3D31D30019A316 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DB163A241D3D31D30019A316 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DB163A271D3D31D30019A316 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DB163A291D3D31D30019A316 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB163A2C1D3D31D30019A316 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +57,17 @@
 		DB163A3E1D3D31D30019A316 /* OnTheMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnTheMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB163A421D3D31D30019A316 /* OnTheMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTheMapUITests.swift; sourceTree = "<group>"; };
 		DB163A441D3D31D30019A316 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB163A501D3D629F0019A316 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		DB311E271D3E905200810814 /* MyTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTextField.swift; sourceTree = "<group>"; };
+		DB311E291D3E95B400810814 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Regular.ttf"; path = "../../../../../Downloads/on the map assets/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		DB866D871D3FC33700B8C534 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		DB866D891D3FC34600B8C534 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		DB866D8B1D4167C300B8C534 /* MyTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableCell.swift; sourceTree = "<group>"; };
+		DBB4B3E61D3E9C6E0093A07D /* InformationPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationPostingViewController.swift; sourceTree = "<group>"; };
+		DBB4B3EF1D3EC15A0093A07D /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
+		DBB4B3F11D3EC16B0093A07D /* UdacityConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConvenience.swift; sourceTree = "<group>"; };
+		DBB4B3F31D3EC2A10093A07D /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
+		DBB4B3F51D3ECF180093A07D /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB163A511D3D629F0019A316 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +99,7 @@
 		DB163A161D3D31D20019A316 = {
 			isa = PBXGroup;
 			children = (
+				DB163A501D3D629F0019A316 /* MapKit.framework */,
 				DB163A211D3D31D30019A316 /* OnTheMap */,
 				DB163A361D3D31D30019A316 /* OnTheMapTests */,
 				DB163A411D3D31D30019A316 /* OnTheMapUITests */,
@@ -98,11 +121,11 @@
 			isa = PBXGroup;
 			children = (
 				DB163A221D3D31D30019A316 /* AppDelegate.swift */,
-				DB163A241D3D31D30019A316 /* ViewController.swift */,
-				DB163A261D3D31D30019A316 /* Main.storyboard */,
-				DB163A291D3D31D30019A316 /* Assets.xcassets */,
-				DB163A2B1D3D31D30019A316 /* LaunchScreen.storyboard */,
-				DB163A2E1D3D31D30019A316 /* Info.plist */,
+				DBB4B3F51D3ECF180093A07D /* GCDBlackBox.swift */,
+				DBB4B3EE1D3EC1090093A07D /* Model */,
+				DBB4B3E91D3EC0000093A07D /* Controller */,
+				DBB4B3EA1D3EC0380093A07D /* Assets */,
+				DBB4B3ED1D3EC0870093A07D /* Supporting Files */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -123,6 +146,48 @@
 				DB163A441D3D31D30019A316 /* Info.plist */,
 			);
 			path = OnTheMapUITests;
+			sourceTree = "<group>";
+		};
+		DBB4B3E91D3EC0000093A07D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DB163A241D3D31D30019A316 /* LoginViewController.swift */,
+				DB866D871D3FC33700B8C534 /* MapViewController.swift */,
+				DB866D891D3FC34600B8C534 /* TableViewController.swift */,
+				DBB4B3E61D3E9C6E0093A07D /* InformationPostingViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		DBB4B3EA1D3EC0380093A07D /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				DB163A291D3D31D30019A316 /* Assets.xcassets */,
+				DB163A261D3D31D30019A316 /* Main.storyboard */,
+				DB163A2B1D3D31D30019A316 /* LaunchScreen.storyboard */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		DBB4B3ED1D3EC0870093A07D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DB866D8B1D4167C300B8C534 /* MyTableCell.swift */,
+				DB311E271D3E905200810814 /* MyTextField.swift */,
+				DB311E291D3E95B400810814 /* Roboto-Regular.ttf */,
+				DB163A2E1D3D31D30019A316 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DBB4B3EE1D3EC1090093A07D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DBB4B3EF1D3EC15A0093A07D /* UdacityClient.swift */,
+				DBB4B3F31D3EC2A10093A07D /* UdacityConstants.swift */,
+				DBB4B3F11D3EC16B0093A07D /* UdacityConvenience.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,8 +324,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB163A251D3D31D30019A316 /* ViewController.swift in Sources */,
+				DBB4B3F61D3ECF180093A07D /* GCDBlackBox.swift in Sources */,
+				DBB4B3F01D3EC15A0093A07D /* UdacityClient.swift in Sources */,
+				DB866D8C1D4167C300B8C534 /* MyTableCell.swift in Sources */,
+				DBB4B3F41D3EC2A10093A07D /* UdacityConstants.swift in Sources */,
+				DB866D8A1D3FC34600B8C534 /* TableViewController.swift in Sources */,
+				DBB4B3E71D3E9C6E0093A07D /* InformationPostingViewController.swift in Sources */,
+				DB866D881D3FC33700B8C534 /* MapViewController.swift in Sources */,
+				DB311E281D3E905200810814 /* MyTextField.swift in Sources */,
+				DB163A251D3D31D30019A316 /* LoginViewController.swift in Sources */,
 				DB163A231D3D31D30019A316 /* AppDelegate.swift in Sources */,
+				DBB4B3F21D3EC16C0093A07D /* UdacityConvenience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +561,7 @@
 				DB163A491D3D31D30019A316 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DB163A4A1D3D31D30019A316 /* Build configuration list for PBXNativeTarget "OnTheMapTests" */ = {
 			isa = XCConfigurationList;
@@ -495,6 +570,7 @@
 				DB163A4C1D3D31D30019A316 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DB163A4D1D3D31D30019A316 /* Build configuration list for PBXNativeTarget "OnTheMapUITests" */ = {
 			isa = XCConfigurationList;
@@ -503,6 +579,7 @@
 				DB163A4F1D3D31D30019A316 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
