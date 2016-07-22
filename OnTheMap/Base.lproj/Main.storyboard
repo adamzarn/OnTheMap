@@ -254,8 +254,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="lag-PB-sOH">
+                                <rect key="frame" x="0.0" y="209" width="414" height="353"/>
+                                <connections>
+                                    <outlet property="delegate" destination="TQL-sB-800" id="4y2-9U-k6c"/>
+                                </connections>
+                            </mapView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ovl-t2-vqf">
+                                <rect key="frame" x="36" y="279" width="342" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Where are you studying today?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xLO-jp-h2s">
+                                <rect key="frame" x="72" y="78" width="271" height="83"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ykf-5D-rP2">
+                                <rect key="frame" x="149" y="634" width="117" height="30"/>
+                                <connections>
+                                    <action selector="bottomButtonPressed:" destination="TQL-sB-800" eventType="touchUpInside" id="34r-14-iAf"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="30y-CB-nMf">
+                                <rect key="frame" x="36" y="105" width="342" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y3z-uu-mjf">
-                                <rect key="frame" x="350" y="20" width="64" height="30"/>
+                                <rect key="frame" x="330" y="20" width="64" height="30"/>
                                 <state key="normal" title="Cancel"/>
                                 <connections>
                                     <action selector="cancelButtonPressed:" destination="TQL-sB-800" eventType="touchUpInside" id="Ajl-NB-NOa"/>
@@ -264,11 +292,44 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="lag-PB-sOH" firstAttribute="top" secondItem="SoY-1y-Znx" secondAttribute="bottom" constant="189" id="09z-hu-QVX"/>
+                            <constraint firstItem="Y3z-uu-mjf" firstAttribute="top" secondItem="SoY-1y-Znx" secondAttribute="bottom" id="0Az-eR-9zc"/>
                             <constraint firstItem="Y3z-uu-mjf" firstAttribute="top" secondItem="SoY-1y-Znx" secondAttribute="bottom" id="2D3-5K-5Hk"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Y3z-uu-mjf" secondAttribute="trailing" id="2Ft-nl-nSM"/>
+                            <constraint firstAttribute="trailing" secondItem="lag-PB-sOH" secondAttribute="trailing" id="8Uo-sF-wUK"/>
+                            <constraint firstItem="kxF-99-Fqg" firstAttribute="top" secondItem="lag-PB-sOH" secondAttribute="bottom" constant="174" id="9Uq-ii-Vbv"/>
+                            <constraint firstItem="lag-PB-sOH" firstAttribute="trailing" secondItem="Y3z-uu-mjf" secondAttribute="trailing" id="Byg-OO-XHw"/>
+                            <constraint firstItem="30y-CB-nMf" firstAttribute="centerX" secondItem="uj9-0d-BUm" secondAttribute="centerX" id="CNj-y4-s40"/>
+                            <constraint firstItem="ovl-t2-vqf" firstAttribute="centerX" secondItem="ykf-5D-rP2" secondAttribute="centerX" id="FSZ-1V-DkF"/>
+                            <constraint firstItem="kxF-99-Fqg" firstAttribute="top" secondItem="ykf-5D-rP2" secondAttribute="bottom" constant="72" id="HMF-U9-u1H"/>
+                            <constraint firstItem="xLO-jp-h2s" firstAttribute="top" secondItem="SoY-1y-Znx" secondAttribute="bottom" constant="58" id="LCf-9S-G1e"/>
+                            <constraint firstItem="lag-PB-sOH" firstAttribute="centerX" secondItem="ovl-t2-vqf" secondAttribute="centerX" id="Nbv-tG-HyA"/>
+                            <constraint firstItem="ovl-t2-vqf" firstAttribute="centerX" secondItem="xLO-jp-h2s" secondAttribute="centerX" id="PFb-R1-fLB"/>
+                            <constraint firstItem="30y-CB-nMf" firstAttribute="top" secondItem="SoY-1y-Znx" secondAttribute="bottom" constant="85" id="RpL-4K-W5D"/>
+                            <constraint firstItem="lag-PB-sOH" firstAttribute="top" secondItem="Y3z-uu-mjf" secondAttribute="bottom" constant="159" id="XiD-My-Jg4"/>
+                            <constraint firstItem="ykf-5D-rP2" firstAttribute="centerX" secondItem="uj9-0d-BUm" secondAttribute="centerX" id="aoa-Xt-v0Z"/>
+                            <constraint firstItem="ovl-t2-vqf" firstAttribute="leading" secondItem="uj9-0d-BUm" secondAttribute="leadingMargin" constant="16" id="g32-f0-nvT"/>
+                            <constraint firstItem="lag-PB-sOH" firstAttribute="leading" secondItem="uj9-0d-BUm" secondAttribute="leading" id="l9D-xl-IBh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Y3z-uu-mjf" secondAttribute="trailing" id="lGV-CD-PH0"/>
+                            <constraint firstItem="ovl-t2-vqf" firstAttribute="top" secondItem="uj9-0d-BUm" secondAttribute="top" constant="279" id="oiy-ov-UrN"/>
+                            <constraint firstItem="lag-PB-sOH" firstAttribute="top" secondItem="ovl-t2-vqf" secondAttribute="bottom" constant="-100" id="vVD-3r-2ZA"/>
+                            <constraint firstItem="ovl-t2-vqf" firstAttribute="centerX" secondItem="lag-PB-sOH" secondAttribute="centerX" id="wDf-8x-w5D"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Byg-OO-XHw"/>
+                                <exclude reference="XiD-My-Jg4"/>
+                                <exclude reference="2D3-5K-5Hk"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="bottomButton" destination="ykf-5D-rP2" id="BWV-mS-Dmd"/>
+                        <outlet property="linkTextField" destination="30y-CB-nMf" id="SD7-Zh-ltP"/>
+                        <outlet property="locationTextField" destination="ovl-t2-vqf" id="2MA-P5-aYD"/>
+                        <outlet property="myMapView" destination="lag-PB-sOH" id="uNi-UX-Xfj"/>
+                        <outlet property="topLabel" destination="xLO-jp-h2s" id="KYn-ua-ZaC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4f0-M4-FwP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
