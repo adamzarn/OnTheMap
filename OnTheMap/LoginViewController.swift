@@ -18,6 +18,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var facebookLoginButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var signUpButton: UIButton!
+
+    var accountNumber:String?
+    var userInfo:[[String:AnyObject]]?
     
     @IBAction func signUpButtonPressed(sender: AnyObject) {
         if let url = NSURL(string: "https://www.udacity.com/account/auth#!/signup") {
@@ -77,11 +80,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             let newData = data?.subdataWithRange(NSMakeRange(5, data!.length-5))
             let newDataString = NSString(data: newData!, encoding: NSUTF8StringEncoding)
+            self.accountNumber = newDataString?.substringWithRange(NSRange(location: 41, length: 10))
             
             performUIUpdatesOnMain {
                 if newDataString!.rangeOfString("error").location == NSNotFound {
                     let nextController = self.storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
                     self.presentViewController(nextController,animated:true,completion:nil)
+                    print(self.accountNumber)
+                    self.getUserData()
                     return
                 } else {
                     self.errorLabel.text = "⚠️ Invalid Username or Password. Try Again."
@@ -92,6 +98,38 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     task.resume()
 
     }
+    
+    func getUserData() {
+        print(self.accountNumber)
+        //let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/\(self.accountNumber!)")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/6669529102")!)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+        
+            if error != nil {
+                return
+            } else {
+                if let data = data {
+                    var parsedResult: AnyObject!
+                    do {
+                        parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                    } catch {
+                        print("error")
+                        return
+                    }
+                    if let userInfo = parsedResult as? [[String:AnyObject]] {
+                        performUIUpdatesOnMain {
+                            self.userInfo = userInfo
+                            print(userInfo)
+                        }
+                    }
+                }
+            }
+        }
+        task.resume()
+
+    }
+    
     
     func textFieldDidBeginEditing(textField: UITextField) {
         textField.becomeFirstResponder()

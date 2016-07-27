@@ -21,6 +21,10 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     }
     
+    func viewWillAppear() {
+        getLocationData()
+    }
+    
     @IBAction func refreshData(sender: AnyObject) {
         getLocationData()
         print("Data refreshed")

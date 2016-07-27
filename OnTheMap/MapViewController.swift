@@ -22,6 +22,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     }
     
+    func viewWillAppear() {
+        getLocationData()
+    }
+    
     func setUpMapView() {
     
         let locations = studentLocationsDictionary
