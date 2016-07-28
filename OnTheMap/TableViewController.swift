@@ -86,7 +86,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         let app = UIApplication.sharedApplication()
         if let toOpen = studentLocationsDictionary[indexPath.row]["mediaURL"] {
-            print(URLVerified(toOpen as? String))
             if URLVerified(toOpen as? String) {
                 app.openURL(NSURL(string: toOpen as! String)!)
             } else {

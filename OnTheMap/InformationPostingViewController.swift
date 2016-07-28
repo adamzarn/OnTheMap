@@ -69,9 +69,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         var annotations = [MKPointAnnotation]()
         let coordinate = CLLocationCoordinate2D(latitude: self.lat!, longitude: self.long!)
         
-        print(self.lat!)
-        print(self.long!)
-        
         myMapView.setRegion(MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
         
         let annotation = MKPointAnnotation()
@@ -105,13 +102,13 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     }
     
     func postLocation() {
-    
+        
         let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
         request.HTTPMethod = "POST"
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"uniqueKey\": \"6669529102\", \"firstName\": \"Gregory\", \"lastName\": \"House\",\"mapString\": \"\(locationTextField.text!)\", \"mediaURL\": \"\(linkTextField.text!)\",\"latitude\": \(self.lat!), \"longitude\": \(self.long!)}".dataUsingEncoding(NSUTF8StringEncoding)
+        request.HTTPBody = "{\"uniqueKey\": \"\(CurrentUser.userID)\", \"firstName\": \"\(CurrentUser.firstName)\", \"lastName\": \"\(CurrentUser.lastName)\",\"mapString\": \"\(locationTextField.text!)\", \"mediaURL\": \"\(linkTextField.text!)\",\"latitude\": \(self.lat!), \"longitude\": \(self.long!)}".dataUsingEncoding(NSUTF8StringEncoding)
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil { // Handle error…
@@ -153,7 +150,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        print(textField.text)
         textField.becomeFirstResponder()
         if textField.text == "Enter Your Location Here" || textField.text == "Enter a Link to Share Here" {
             textField.text = ""
@@ -190,10 +186,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
                 self.setUpMapView()
                 self.moveToLinkEntry()
                 if placemark?.areasOfInterest?.count > 0 {
-                    let areaOfInterest = placemark!.areasOfInterest![0]
-                    print(areaOfInterest)
                 } else {
-                    print("No area of interest found.")
                 }
             }
         })

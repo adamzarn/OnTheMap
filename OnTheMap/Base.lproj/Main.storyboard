@@ -123,6 +123,9 @@
                                     <constraint firstAttribute="width" constant="140" id="mXs-v6-1PD"/>
                                 </constraints>
                             </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="pYt-zu-g5x">
+                                <rect key="frame" x="197" y="456" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -132,16 +135,19 @@
                             <constraint firstItem="eKv-lh-SP0" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Ozy-Bo-0Uv"/>
                             <constraint firstItem="eKv-lh-SP0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="R2z-WZ-LhU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uHd-Yi-A8z" secondAttribute="trailing" constant="5" id="aPn-WK-8ma"/>
+                            <constraint firstItem="pYt-zu-g5x" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dYO-Rw-yJm"/>
                             <constraint firstItem="uHd-Yi-A8z" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="184" id="eYI-ZC-jXC"/>
                             <constraint firstItem="eKv-lh-SP0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gGr-Td-lRH"/>
                             <constraint firstItem="uHd-Yi-A8z" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="iUy-Rj-i3W"/>
                             <constraint firstItem="uHd-Yi-A8z" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="5" id="jZ5-Ge-1lu"/>
+                            <constraint firstItem="pYt-zu-g5x" firstAttribute="top" secondItem="eHK-g1-pgr" secondAttribute="bottom" constant="8" id="maD-om-HFx"/>
                             <constraint firstItem="r33-Fu-xiz" firstAttribute="top" secondItem="3MB-YS-r0m" secondAttribute="bottom" constant="8" id="xHw-SR-wbj"/>
                             <constraint firstAttribute="bottom" secondItem="eKv-lh-SP0" secondAttribute="bottom" constant="20" symbolic="YES" id="z86-Fh-7KH"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="pYt-zu-g5x" id="cid-TZ-VTJ"/>
                         <outlet property="emailTextField" destination="9Tw-dw-KrO" id="hkQ-xp-B3y"/>
                         <outlet property="errorLabel" destination="eHK-g1-pgr" id="CMw-JZ-bG4"/>
                         <outlet property="facebookLoginButton" destination="eKv-lh-SP0" id="thm-Bf-4qu"/>
