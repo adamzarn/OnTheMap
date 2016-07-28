@@ -79,18 +79,29 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
             let newData = data?.subdataWithRange(NSMakeRange(5, data!.length-5))
-            let newDataString = NSString(data: newData!, encoding: NSUTF8StringEncoding)
-            self.accountNumber = newDataString?.substringWithRange(NSRange(location: 41, length: 10))
             
-            performUIUpdatesOnMain {
-                if newDataString!.rangeOfString("error").location == NSNotFound {
-                    let nextController = self.storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
-                    self.presentViewController(nextController,animated:true,completion:nil)
-                    print(self.accountNumber)
-                    self.getUserData()
-                    return
-                } else {
-                    self.errorLabel.text = "⚠️ Invalid Username or Password. Try Again."
+            if error != nil {
+                return
+            } else {
+                if let newData = newData {
+                    var parsedResult: AnyObject!
+                    do {
+                        parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
+                    } catch {
+                        print("error")
+                        return
+                    }
+                    if let sessionRequest = parsedResult as? [String:AnyObject] {
+                        performUIUpdatesOnMain {
+                            if let account = sessionRequest["account"] {
+                                self.accountNumber = String(account["key"])
+                                let nextController = self.storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+                                self.presentViewController(nextController,animated:true,completion:nil)
+                            } else {
+                                self.errorLabel.text = "⚠️ Invalid Username or Password. Try Again."
+                            }
+                        }
+                    }
                 }
             }
         }

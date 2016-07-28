@@ -21,7 +21,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     }
     
-    func viewWillAppear() {
+    override func viewWillAppear(animated: Bool) {
         getLocationData()
     }
     

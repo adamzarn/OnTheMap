@@ -17,12 +17,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         getLocationData()
-
     }
     
-    func viewWillAppear() {
+    override func viewWillAppear(animated: Bool) {
         getLocationData()
     }
     
