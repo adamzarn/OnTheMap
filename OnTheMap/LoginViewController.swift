@@ -34,8 +34,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.orangeColor()
-        emailTextField.text = "adam.zarn@my.wheaton.edu"
-        passwordTextField.text = "Dukiebaby1"
+        emailTextField.text = "Email"
+        passwordTextField.text = "Password"
         loginButton.backgroundColor = UIColor(red: 0.9647, green: 0.3137, blue: 0.1255, alpha: 1.0)
         facebookLoginButton.backgroundColor = UIColor(red: 0.2313, green: 0.3490, blue: 0.5961, alpha: 1.0)
         self.emailTextField.delegate = self
