@@ -16,14 +16,13 @@
 		DB163A431D3D31D30019A316 /* OnTheMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB163A421D3D31D30019A316 /* OnTheMapUITests.swift */; };
 		DB163A511D3D629F0019A316 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB163A501D3D629F0019A316 /* MapKit.framework */; };
 		DB2E51DD1D4AB8F800018D8C /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E51DC1D4AB8F800018D8C /* CurrentUser.swift */; };
+		DB2E51DF1D4FF81700018D8C /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E51DE1D4FF81700018D8C /* StudentInformation.swift */; };
 		DB311E281D3E905200810814 /* MyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB311E271D3E905200810814 /* MyTextField.swift */; };
 		DB866D881D3FC33700B8C534 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB866D871D3FC33700B8C534 /* MapViewController.swift */; };
 		DB866D8A1D3FC34600B8C534 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB866D891D3FC34600B8C534 /* TableViewController.swift */; };
 		DB866D8C1D4167C300B8C534 /* MyTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB866D8B1D4167C300B8C534 /* MyTableCell.swift */; };
 		DBB4B3E71D3E9C6E0093A07D /* InformationPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3E61D3E9C6E0093A07D /* InformationPostingViewController.swift */; };
-		DBB4B3F01D3EC15A0093A07D /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3EF1D3EC15A0093A07D /* UdacityClient.swift */; };
-		DBB4B3F21D3EC16C0093A07D /* UdacityConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3F11D3EC16B0093A07D /* UdacityConvenience.swift */; };
-		DBB4B3F41D3EC2A10093A07D /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3F31D3EC2A10093A07D /* UdacityConstants.swift */; };
+		DBB4B3F01D3EC15A0093A07D /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3EF1D3EC15A0093A07D /* NetworkClient.swift */; };
 		DBB4B3F61D3ECF180093A07D /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3F51D3ECF180093A07D /* GCDBlackBox.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,15 +59,14 @@
 		DB163A441D3D31D30019A316 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB163A501D3D629F0019A316 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		DB2E51DC1D4AB8F800018D8C /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
+		DB2E51DE1D4FF81700018D8C /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		DB311E271D3E905200810814 /* MyTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTextField.swift; sourceTree = "<group>"; };
 		DB311E291D3E95B400810814 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Regular.ttf"; path = "../../../../../Downloads/on the map assets/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		DB866D871D3FC33700B8C534 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		DB866D891D3FC34600B8C534 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		DB866D8B1D4167C300B8C534 /* MyTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableCell.swift; sourceTree = "<group>"; };
 		DBB4B3E61D3E9C6E0093A07D /* InformationPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationPostingViewController.swift; sourceTree = "<group>"; };
-		DBB4B3EF1D3EC15A0093A07D /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
-		DBB4B3F11D3EC16B0093A07D /* UdacityConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConvenience.swift; sourceTree = "<group>"; };
-		DBB4B3F31D3EC2A10093A07D /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
+		DBB4B3EF1D3EC15A0093A07D /* NetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		DBB4B3F51D3ECF180093A07D /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -185,10 +183,9 @@
 		DBB4B3EE1D3EC1090093A07D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DBB4B3EF1D3EC15A0093A07D /* UdacityClient.swift */,
-				DBB4B3F31D3EC2A10093A07D /* UdacityConstants.swift */,
-				DBB4B3F11D3EC16B0093A07D /* UdacityConvenience.swift */,
+				DBB4B3EF1D3EC15A0093A07D /* NetworkClient.swift */,
 				DB2E51DC1D4AB8F800018D8C /* CurrentUser.swift */,
+				DB2E51DE1D4FF81700018D8C /* StudentInformation.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -328,9 +325,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBB4B3F61D3ECF180093A07D /* GCDBlackBox.swift in Sources */,
-				DBB4B3F01D3EC15A0093A07D /* UdacityClient.swift in Sources */,
+				DBB4B3F01D3EC15A0093A07D /* NetworkClient.swift in Sources */,
 				DB866D8C1D4167C300B8C534 /* MyTableCell.swift in Sources */,
-				DBB4B3F41D3EC2A10093A07D /* UdacityConstants.swift in Sources */,
 				DB866D8A1D3FC34600B8C534 /* TableViewController.swift in Sources */,
 				DBB4B3E71D3E9C6E0093A07D /* InformationPostingViewController.swift in Sources */,
 				DB866D881D3FC33700B8C534 /* MapViewController.swift in Sources */,
@@ -338,7 +334,7 @@
 				DB163A251D3D31D30019A316 /* LoginViewController.swift in Sources */,
 				DB163A231D3D31D30019A316 /* AppDelegate.swift in Sources */,
 				DB2E51DD1D4AB8F800018D8C /* CurrentUser.swift in Sources */,
-				DBB4B3F21D3EC16C0093A07D /* UdacityConvenience.swift in Sources */,
+				DB2E51DF1D4FF81700018D8C /* StudentInformation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

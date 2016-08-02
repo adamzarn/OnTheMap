@@ -35,8 +35,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.orangeColor()
-        emailTextField.text = "adam.zarn@my.wheaton.edu"
-        passwordTextField.text = "Dukiebaby1"
+        emailTextField.text = "Email"
+        passwordTextField.text = "Password"
         loginButton.backgroundColor = UIColor(red: 0.9647, green: 0.3137, blue: 0.1255, alpha: 1.0)
         facebookLoginButton.backgroundColor = UIColor(red: 0.2313, green: 0.3490, blue: 0.5961, alpha: 1.0)
         self.emailTextField.delegate = self
@@ -64,6 +64,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         activityIndicator.hidden = true
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        emailTextField.text = "Email"
+        passwordTextField.text = "Password"
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -71,6 +76,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginPressed(sender: AnyObject) {
+        
+        self.errorLabel.text = ""
+        
+        if emailTextField.isFirstResponder() {
+            emailTextField.resignFirstResponder()
+        } else {
+            passwordTextField.resignFirstResponder()
+        }
         
         self.activityIndicator.hidden = false
         self.activityIndicator.startAnimating()
@@ -107,6 +120,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                                 self.getUserData()
                             } else {
                                 self.errorLabel.text = "⚠️ Invalid Username or Password. Try Again."
+                                self.activityIndicator.stopAnimating()
+                                self.activityIndicator.hidden = true
                             }
                         }
                     }

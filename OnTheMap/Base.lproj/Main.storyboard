@@ -10,7 +10,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -226,7 +226,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="On The Map" id="Kq0-uN-NUg">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="a3j-Nv-7tQ"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="a3j-Nv-7tQ">
+                            <connections>
+                                <action selector="logoutPressed" destination="W5b-Hg-0M7" id="1T0-rP-yFq"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="refresh" id="WYS-XO-aWv">
                                 <connections>
@@ -251,7 +255,7 @@
         <!--Information Posting View Controller-->
         <scene sceneID="qgK-Bz-4kS">
             <objects>
-                <viewController id="TQL-sB-800" customClass="InformationPostingViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InformationPostingViewController" id="TQL-sB-800" customClass="InformationPostingViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SoY-1y-Znx"/>
                         <viewControllerLayoutGuide type="bottom" id="kxF-99-Fqg"/>
@@ -401,12 +405,16 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="On The Map" id="ViG-Vg-Yag">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="UgB-NE-LE3"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="UgB-NE-LE3">
+                            <connections>
+                                <action selector="logoutPressed" destination="zGe-R5-uNq" id="sfA-Z1-2NS"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="refresh" id="Pm7-5j-2bk"/>
                             <barButtonItem image="Pin" id="Phm-8c-PD8" userLabel="Post">
                                 <connections>
-                                    <segue destination="TQL-sB-800" kind="presentation" id="4Ee-D7-64V"/>
+                                    <action selector="addLocation:" destination="zGe-R5-uNq" id="nX7-C9-byC"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -483,7 +491,4 @@
         <image name="Pin" width="32" height="32"/>
         <image name="Udacity" width="256" height="256"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="ile-xb-Emq"/>
-    </inferredMetricsTieBreakers>
 </document>

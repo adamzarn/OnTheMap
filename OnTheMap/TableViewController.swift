@@ -12,67 +12,41 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBOutlet weak var myTableView: UITableView!
     
-    var studentLocationsDictionary: [[String:AnyObject]] = []
-
+    let unableToLogoutAlert:UIAlertController = UIAlertController(title: "Unable to Logout", message: "You are unable to logout at this time.",preferredStyle: UIAlertControllerStyle.Alert)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        getLocationData()
+        self.unableToLogoutAlert.addAction(UIAlertAction(title:"OK",style: UIAlertActionStyle.Default, handler: nil))
+        NetworkClient.sharedInstance().getLocationData(nil,vc2:self)
 
     }
     
     override func viewWillAppear(animated: Bool) {
-        getLocationData()
+        NetworkClient.sharedInstance().getLocationData(nil,vc2:self)
     }
     
     @IBAction func refreshData(sender: AnyObject) {
-        getLocationData()
+        NetworkClient.sharedInstance().getLocationData(nil,vc2:self)
         print("Data refreshed")
-    }
-
-    func getLocationData() {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100")!)
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { (data, response, error) in
-            if error != nil {
-                return
-            } else {
-                if let data = data {
-                    var parsedResult: AnyObject!
-                    do {
-                        parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-                    } catch {
-                        print("error")
-                        return
-                    }
-                    if let locationsDictionary = parsedResult as? [String:AnyObject], locationsArray = locationsDictionary["results"] as? [[String:AnyObject]] {
-                        performUIUpdatesOnMain {
-                            self.studentLocationsDictionary = locationsArray
-                            self.myTableView.reloadData()
-                        }
-                    }
-                }
-            }
-        }
-        task.resume()
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return studentLocationsDictionary.count
+        return StudentInformation.studentInformationArray.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         let cell: MyTableCell = tableView.dequeueReusableCellWithIdentifier("Cell") as! MyTableCell
-        let currentStudent = studentLocationsDictionary[indexPath.row]
+        let currentStudent = StudentInformation.studentInformationArray[indexPath.row]
         
-        if studentLocationsDictionary.count == 0 {
+        let first = currentStudent.firstName as! String
+        let last = currentStudent.lastName as! String
+        
+        if StudentInformation.studentInformationArray.count == 0 {
             return cell
         } else {
-            cell.setCell(String(currentStudent["firstName"]!) + " " + String(currentStudent["lastName"]!))
+            cell.setCell(first + " " + last)
         }
             
         return cell
@@ -81,15 +55,13 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let cell: MyTableCell = tableView.dequeueReusableCellWithIdentifier("Cell") as! MyTableCell
-        let currentStudent = studentLocationsDictionary[indexPath.row]
+        let currentStudent = StudentInformation.studentInformationArray[indexPath.row]
         
         let app = UIApplication.sharedApplication()
-        if let toOpen = studentLocationsDictionary[indexPath.row]["mediaURL"] {
+        if let toOpen = currentStudent.mediaURL {
             if URLVerified(toOpen as? String) {
                 app.openURL(NSURL(string: toOpen as! String)!)
             } else {
-                cell.setCell(String(currentStudent["firstName"]!) + " " + String(currentStudent["lastName"]!) + " (Invalid URL Provided)")
                 self.myTableView.reloadData()
             }
         }
@@ -104,5 +76,9 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
         return false
+    }
+    
+    @IBAction func logoutPressed() {
+        NetworkClient.sharedInstance().logout(nil,vc2: self)
     }
 }

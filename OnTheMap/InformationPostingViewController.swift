@@ -28,7 +28,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
             self.geocode(locationTextField.text!)
         } else {
             isSuccess(URLVerified(linkTextField.text!), success: { () -> Void in
-                self.postLocation()
+                NetworkClient.sharedInstance().postLocation("StudentLocation",methodType:"POST",location:self.locationTextField.text!,link:self.linkTextField.text!,lat:String(self.lat!),long:String(self.long!))
                 self.dismissViewControllerAnimated(false, completion: nil)
                 }, error: { () -> Void in
                 self.presentViewController(self.invalidURLAlert, animated: true, completion: nil)
@@ -99,26 +99,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         }
         
         return pinView
-    }
-    
-    func postLocation() {
-        
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
-        request.HTTPMethod = "POST"
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"uniqueKey\": \"\(CurrentUser.userID)\", \"firstName\": \"\(CurrentUser.firstName)\", \"lastName\": \"\(CurrentUser.lastName)\",\"mapString\": \"\(locationTextField.text!)\", \"mediaURL\": \"\(linkTextField.text!)\",\"latitude\": \(self.lat!), \"longitude\": \(self.long!)}".dataUsingEncoding(NSUTF8StringEncoding)
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil { // Handle error…
-                return
-            }
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-        }
-    
-        task.resume()
-    
     }
 
     override func viewDidLoad() {
