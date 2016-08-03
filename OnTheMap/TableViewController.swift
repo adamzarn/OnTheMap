@@ -20,7 +20,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NetworkClient.sharedInstance().getLocationData { (result) -> () in
             self.myTableView.reloadData()
         }
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -36,8 +35,10 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     }
     
+    @IBAction func queryStudent(sender: AnyObject) {
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return StudentInformation.studentInformationArray.count
     }
     
@@ -85,6 +86,15 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @IBAction func logoutPressed() {
-        NetworkClient.sharedInstance().logout(nil,vc2: self)
+        NetworkClient.sharedInstance().logout { (result) -> () in
+            if let session = result!["session"] {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let nextController = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+                self.presentViewController(nextController, animated: true, completion: nil)
+            } else {
+                self.presentViewController(self.unableToLogoutAlert, animated: true, completion: nil)
+            }
+        }
     }
+    
 }

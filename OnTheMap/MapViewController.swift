@@ -13,6 +13,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var myMapView: MKMapView!
     
+    let alreadyPostedAlert:UIAlertController = UIAlertController(title: "Location Already Exists", message: "A location for you already exists, what would you like to do?",preferredStyle: UIAlertControllerStyle.Alert)
+    
     let unableToLogoutAlert:UIAlertController = UIAlertController(title: "Unable to Logout", message: "You are unable to logout at this time.",preferredStyle: UIAlertControllerStyle.Alert)
     
     override func viewDidLoad() {
@@ -21,10 +23,31 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         NetworkClient.sharedInstance().getLocationData { (result) -> () in
             self.setUpMapView()
         }
+        
+        alreadyPostedAlert.addAction(UIAlertAction(title:"Overwrite",
+            style: UIAlertActionStyle.Default,
+            handler: {(alert: UIAlertAction!) in
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let nextController = storyboard.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController
+                self.presentViewController(nextController, animated: true, completion: nil)
+            })
+        )
+        
+        alreadyPostedAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+
+        
     }
     
     @IBAction func queryStudent(sender: AnyObject) {
-        NetworkClient.sharedInstance().doesStudentLocationExist()
+        NetworkClient.sharedInstance().doesStudentLocationExist { (objectID) -> () in
+            if objectID == "" {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let nextController = storyboard.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController
+                self.presentViewController(nextController, animated: true, completion: nil)
+            } else {
+                self.presentViewController(self.alreadyPostedAlert, animated: true, completion: nil)
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -92,9 +115,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func logoutPressed() {
-        NetworkClient.sharedInstance().logout(self,vc2: nil)
+        NetworkClient.sharedInstance().logout { (result) -> () in
+            if let session = result!["session"] {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let nextController = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+                self.presentViewController(nextController, animated: true, completion: nil)
+            } else {
+                self.presentViewController(self.unableToLogoutAlert, animated: true, completion: nil)
+            }
+        }
     }
-    
     
 }
 
