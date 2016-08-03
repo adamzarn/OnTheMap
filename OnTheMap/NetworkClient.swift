@@ -70,7 +70,7 @@ class NetworkClient: NSObject {
         task.resume()
     }
     
-    func getLocationData(vc1: MapViewController?, vc2: TableViewController?) {
+    func getLocationData(completion: (result: [StudentInformation]?) -> ()) {
         let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100")!)
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
@@ -87,17 +87,14 @@ class NetworkClient: NSObject {
                         print("error")
                         return
                     }
-                    
+                    print(parsedResult)
                     if let locationsDictionary = parsedResult as? [String:AnyObject], locationsArray = locationsDictionary["results"] as? [[String:AnyObject]] {
                         performUIUpdatesOnMain {
                             for student in locationsArray {
                                 StudentInformation.studentInformationArray.append(StudentInformation(sourceData: student))
                             }
-                            if let vc1 = vc1 {
-                                vc1.setUpMapView()
-                            } else {
-                                vc2!.myTableView.reloadData()
-                            }
+                            print(StudentInformation.studentInformationArray)
+                            completion(result: StudentInformation.studentInformationArray)
                         }
                     }
                 }
@@ -126,10 +123,37 @@ class NetworkClient: NSObject {
         
     }
     
-    func doesStudentLocationExist() {
+    func encodeParameters(params: [String: AnyObject]) -> String {
+        let queryItems = params.map() { NSURLQueryItem(name:$0, value:$1 as! String)}
+        let components = NSURLComponents()
+        components.queryItems = queryItems
+        return components.percentEncodedQuery ?? ""
+    }
     
-        let urlString = "https://api.parse.com/1/classes/StudentLocation?where=%7B%22uniqueKey%22%3A%22\(CurrentUser.userID)%22%7D"
-        let url = NSURL(string: urlString)
+    func doesStudentLocationExist() {
+        
+        var search = [String: String]()
+        let searchText = "\(CurrentUser.userID!)"
+        
+        search = [ "uniqueKey"  : searchText ]
+        
+        var jsonifyError:NSError? = nil
+        
+        let data: NSData?
+        do {
+            data = try NSJSONSerialization.dataWithJSONObject(search, options: [])
+        } catch let error as NSError {
+            jsonifyError = error
+            data = nil
+        }
+        
+        let parameters:[String:AnyObject] = [ "where" : NSString(data: data!, encoding: NSUTF8StringEncoding)! ]
+        
+        let urlQueryString = "https://api.parse.com/1/classes/StudentLocation?" + encodeParameters(parameters)
+        
+        print(urlQueryString)
+        
+        let url = NSURL(string: urlQueryString)
         let request = NSMutableURLRequest(URL: url!)
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")

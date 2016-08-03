@@ -16,6 +16,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     @IBOutlet weak var bottomButton: UIButton!
     @IBOutlet weak var myMapView: MKMapView!
     @IBOutlet weak var locationTextField: UITextField!
+    @IBOutlet weak var myView: UIView!
     
     var lat: Double?
     var long: Double?
@@ -37,12 +38,18 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     }
     
     func moveToLinkEntry() {
+        myView.hidden = true
         myMapView.hidden = false
         locationTextField.enabled = false
         locationTextField.hidden = true
         linkTextField.hidden = false
         topLabel.hidden = true
         bottomButton.setTitle("Submit", forState: .Normal)
+        bottomButton.backgroundColor = UIColor.whiteColor()
+        bottomButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        bottomButton.layer.borderWidth = 1
+        bottomButton.layer.borderColor = UIColor.blackColor().CGColor
+        bottomButton.enabled = false
     }
     
     func isSuccess(val:Bool, success: () -> Void, error: () -> Void) {
@@ -123,6 +130,8 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         locationTextField.font = UIFont(name: "Roboto-Regular", size:17)
         linkTextField.font = UIFont(name: "Roboto-Regular", size:17)
         bottomButton.titleLabel!.font = UIFont(name: "Roboto-Regular", size:17)
+        bottomButton.enabled = false
+        bottomButton.layer.cornerRadius = 5
     }
     
     @IBAction func cancelButtonPressed(sender: AnyObject) {
@@ -133,6 +142,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         textField.becomeFirstResponder()
         if textField.text == "Enter Your Location Here" || textField.text == "Enter a Link to Share Here" {
             textField.text = ""
+            bottomButton.enabled = true
         }
     }
     

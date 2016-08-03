@@ -18,57 +18,19 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.unableToLogoutAlert.addAction(UIAlertAction(title:"OK",style: UIAlertActionStyle.Default, handler: nil))
-        NetworkClient.sharedInstance().getLocationData(self,vc2:nil)
-    }
-    
-    func encodeParameters(params: [String: String]) -> String {
-        let queryItems = params.map() { NSURLQueryItem(name:$0, value:$1)}
-        let components = NSURLComponents()
-        components.queryItems = queryItems
-        return components.percentEncodedQuery ?? ""
-    }
-    
-    @IBAction func addLocation(sender: AnyObject) {
-        
-        let parameter = [
-            "where" : "{\"uniqueKey\":\"\(CurrentUser.userID!)\"}"
-        ]
-        let urlQueryString = "https://api.parse.com/1/classes/StudentLocation?" + encodeParameters(parameter)
-
-        print(urlQueryString)
-        let url = NSURL(string: urlQueryString)
-        let request = NSMutableURLRequest(URL: url!)
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil {
-                return
-            } else {
-                if let data = data {
-                    var parsedResult: AnyObject!
-                    do {
-                        parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-                    } catch {
-                        print("error")
-                        return
-                    }
-                    if let lastLocation = parsedResult as? [String:AnyObject], lastLocationResults = lastLocation["results"] as? [String:AnyObject] {
-                        performUIUpdatesOnMain {
-                            print(lastLocationResults["objectId"])
-                            let nextController = self.storyboard?.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController
-                            self.presentViewController(nextController,animated:true,completion:nil)
-                        }
-                    }
-                }
-            }
+        NetworkClient.sharedInstance().getLocationData { (result) -> () in
+            self.setUpMapView()
         }
-        task.resume()
     }
     
+    @IBAction func queryStudent(sender: AnyObject) {
+        NetworkClient.sharedInstance().doesStudentLocationExist()
+    }
     
     override func viewWillAppear(animated: Bool) {
-        NetworkClient.sharedInstance().getLocationData(self,vc2:nil)
+        NetworkClient.sharedInstance().getLocationData { (result) -> () in
+            self.setUpMapView()
+        }
     }
     
     func setUpMapView() {

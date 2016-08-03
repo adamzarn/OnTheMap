@@ -17,17 +17,23 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         self.unableToLogoutAlert.addAction(UIAlertAction(title:"OK",style: UIAlertActionStyle.Default, handler: nil))
-        NetworkClient.sharedInstance().getLocationData(nil,vc2:self)
+        NetworkClient.sharedInstance().getLocationData { (result) -> () in
+            self.myTableView.reloadData()
+        }
 
     }
     
     override func viewWillAppear(animated: Bool) {
-        NetworkClient.sharedInstance().getLocationData(nil,vc2:self)
+        NetworkClient.sharedInstance().getLocationData { (result) -> () in
+            self.myTableView.reloadData()
+        }
     }
     
     @IBAction func refreshData(sender: AnyObject) {
-        NetworkClient.sharedInstance().getLocationData(nil,vc2:self)
-        print("Data refreshed")
+        NetworkClient.sharedInstance().getLocationData { (result) -> () in
+            self.myTableView.reloadData()
+        }
+
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

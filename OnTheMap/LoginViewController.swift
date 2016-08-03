@@ -12,8 +12,8 @@ import MapKit
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var loginLabel: UILabel!
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var emailTextField: MyTextField!
+    @IBOutlet weak var passwordTextField: MyTextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var facebookLoginButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
