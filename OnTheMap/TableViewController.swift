@@ -12,30 +12,52 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBOutlet weak var myTableView: UITableView!
     
+    let alreadyPostedAlert:UIAlertController = UIAlertController(title: "Location Already Exists", message: "A location for you already exists, what would you like to do?",preferredStyle: UIAlertControllerStyle.Alert)
+    
     let unableToLogoutAlert:UIAlertController = UIAlertController(title: "Unable to Logout", message: "You are unable to logout at this time.",preferredStyle: UIAlertControllerStyle.Alert)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.unableToLogoutAlert.addAction(UIAlertAction(title:"OK",style: UIAlertActionStyle.Default, handler: nil))
-        NetworkClient.sharedInstance().getLocationData { (result) -> () in
+        ParseClient.sharedInstance().getLocationData { (result) -> () in
             self.myTableView.reloadData()
         }
+        
+        alreadyPostedAlert.addAction(UIAlertAction(title:"Overwrite",
+            style: UIAlertActionStyle.Default,
+            handler: {(alert: UIAlertAction!) in
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let nextController = storyboard.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController
+                self.presentViewController(nextController, animated: true, completion: nil)
+        })
+        )
+        
+        alreadyPostedAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
     }
     
     override func viewWillAppear(animated: Bool) {
-        NetworkClient.sharedInstance().getLocationData { (result) -> () in
+        ParseClient.sharedInstance().getLocationData { (result) -> () in
             self.myTableView.reloadData()
         }
     }
     
     @IBAction func refreshData(sender: AnyObject) {
-        NetworkClient.sharedInstance().getLocationData { (result) -> () in
+        ParseClient.sharedInstance().getLocationData { (result) -> () in
             self.myTableView.reloadData()
         }
 
     }
     
-    @IBAction func queryStudent(sender: AnyObject) {
+    @IBAction func startPost(sender: AnyObject) {
+        ParseClient.sharedInstance().doesStudentLocationExist { (objectID) -> () in
+            if objectID == "" {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let nextController = storyboard.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController
+                self.presentViewController(nextController, animated: true, completion: nil)
+            } else {
+                self.presentViewController(self.alreadyPostedAlert, animated: true, completion: nil)
+            }
+        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -47,13 +69,25 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let cell: MyTableCell = tableView.dequeueReusableCellWithIdentifier("Cell") as! MyTableCell
         let currentStudent = StudentInformation.studentInformationArray[indexPath.row]
         
+        var rowText = NSMutableAttributedString()
+        
         let first = currentStudent.firstName as! String
         let last = currentStudent.lastName as! String
+        let place = currentStudent.mapString as! String
+        let startPlace = first.characters.count + last.characters.count + 2
+        let lengthPlace = place.characters.count
+        
+        rowText = NSMutableAttributedString(string:first + " " + last + " " + place)
+        rowText.addAttribute(NSFontAttributeName,
+                             value: UIFont(name:"Georgia",
+                size:10.0)!,
+                range: NSRange(location: startPlace,length: lengthPlace)
+        )
         
         if StudentInformation.studentInformationArray.count == 0 {
             return cell
         } else {
-            cell.setCell(first + " " + last)
+            cell.setCell(rowText)
         }
             
         return cell
@@ -86,7 +120,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @IBAction func logoutPressed() {
-        NetworkClient.sharedInstance().logout { (result) -> () in
+        UdacityClient.sharedInstance().logout { (result) -> () in
             if let session = result!["session"] {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let nextController = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController

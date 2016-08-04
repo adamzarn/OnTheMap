@@ -20,7 +20,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.unableToLogoutAlert.addAction(UIAlertAction(title:"OK",style: UIAlertActionStyle.Default, handler: nil))
-        NetworkClient.sharedInstance().getLocationData { (result) -> () in
+        ParseClient.sharedInstance().getLocationData { (result) -> () in
             self.setUpMapView()
         }
         
@@ -38,8 +38,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
     }
     
-    @IBAction func queryStudent(sender: AnyObject) {
-        NetworkClient.sharedInstance().doesStudentLocationExist { (objectID) -> () in
+    @IBAction func startPost(sender: AnyObject) {
+        ParseClient.sharedInstance().doesStudentLocationExist { (objectID) -> () in
             if objectID == "" {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let nextController = storyboard.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController
@@ -51,13 +51,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     override func viewWillAppear(animated: Bool) {
-        NetworkClient.sharedInstance().getLocationData { (result) -> () in
+        ParseClient.sharedInstance().getLocationData { (result) -> () in
             self.setUpMapView()
         }
     }
     
     func setUpMapView() {
     
+        let allAnnotations = self.myMapView.annotations
+        self.myMapView.removeAnnotations(allAnnotations)
+        
         let locations = StudentInformation.studentInformationArray
     
         var annotations = [MKPointAnnotation]()
@@ -115,7 +118,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func logoutPressed() {
-        NetworkClient.sharedInstance().logout { (result) -> () in
+        UdacityClient.sharedInstance().logout { (result) -> () in
             if let session = result!["session"] {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let nextController = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController

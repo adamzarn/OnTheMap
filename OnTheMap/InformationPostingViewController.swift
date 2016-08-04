@@ -24,13 +24,21 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     let invalidAddressAlert:UIAlertController = UIAlertController(title: "Invalid Address", message: "Please enter a valid address.",preferredStyle: UIAlertControllerStyle.Alert)
     let invalidURLAlert:UIAlertController = UIAlertController(title: "Invalid URL", message: "You have entered an invalid URL, do you wish to continue?",preferredStyle: UIAlertControllerStyle.Alert)
     
+    func postLocation() {
+        if CurrentUser.objectID == "" {
+            ParseClient.sharedInstance().postLocation("POST",location:self.locationTextField.text!,link:self.linkTextField.text!,lat:String(self.lat!),long:String(self.long!))
+        } else {
+            ParseClient.sharedInstance().postLocation("PUT",location:self.locationTextField.text!,link:self.linkTextField.text!,lat:String(self.lat!),long:String(self.long!))
+        }
+        self.dismissViewControllerAnimated(false, completion: nil)
+    }
+    
     @IBAction func bottomButtonPressed(sender: AnyObject) {
         if bottomButton.titleLabel!.text == "Find on the Map" {
             self.geocode(locationTextField.text!)
         } else {
             isSuccess(URLVerified(linkTextField.text!), success: { () -> Void in
-                NetworkClient.sharedInstance().postLocation("StudentLocation",methodType:"POST",location:self.locationTextField.text!,link:self.linkTextField.text!,lat:String(self.lat!),long:String(self.long!))
-                self.dismissViewControllerAnimated(false, completion: nil)
+                self.postLocation()
                 }, error: { () -> Void in
                 self.presentViewController(self.invalidURLAlert, animated: true, completion: nil)
             })
@@ -114,6 +122,8 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         self.linkTextField.delegate = self
         locationTextField.text = "Enter Your Location Here"
         linkTextField.text = "Enter a Link to Share Here"
+        locationTextField.autocorrectionType = .No
+        linkTextField.autocorrectionType = .No
         myMapView.hidden = true
         linkTextField.hidden = true
         bottomButton.setTitle("Find on the Map", forState: .Normal)
@@ -122,7 +132,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         invalidURLAlert.addAction(UIAlertAction(title:"Continue",
                                                 style: UIAlertActionStyle.Default,
                                                 handler: {(alert: UIAlertAction!) in
-                                                    self.dismissViewControllerAnimated(false, completion: nil)}))
+                                                    self.postLocation()}))
         
         invalidURLAlert.addAction(UIAlertAction(title:"Cancel",style: UIAlertActionStyle.Default, handler: nil))
         
@@ -132,22 +142,40 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         bottomButton.titleLabel!.font = UIFont(name: "Roboto-Regular", size:17)
         bottomButton.enabled = false
         bottomButton.layer.cornerRadius = 5
+        
     }
     
     @IBAction func cancelButtonPressed(sender: AnyObject) {
         self.dismissViewControllerAnimated(false, completion: nil)
     }
     
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if textField == linkTextField {
+            let protectedRange = NSMakeRange(0, 12)
+            let intersection = NSIntersectionRange(protectedRange, range)
+            if intersection.length > 0 {
+                return false
+            }
+            return true
+        }
+        return true
+    }
+    
     func textFieldDidBeginEditing(textField: UITextField) {
         textField.becomeFirstResponder()
-        if textField.text == "Enter Your Location Here" || textField.text == "Enter a Link to Share Here" {
+        if textField.text == "Enter Your Location Here" {
             textField.text = ""
+            bottomButton.enabled = true
+        }
+        if textField.text == "Enter a Link to Share Here" {
+            let attributedString = NSMutableAttributedString(string: "https://www.")
+            attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blueColor(), range: NSMakeRange(0,12))
+            linkTextField.attributedText = attributedString
             bottomButton.enabled = true
         }
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-
     }
     
     func textFieldShouldEndEditing(textField: UITextField) -> Bool {
@@ -156,7 +184,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        
         textField.resignFirstResponder()
         return true
     }

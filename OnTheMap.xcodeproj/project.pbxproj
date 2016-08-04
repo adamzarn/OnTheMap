@@ -21,8 +21,9 @@
 		DB866D8A1D3FC34600B8C534 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB866D891D3FC34600B8C534 /* TableViewController.swift */; };
 		DB866D8C1D4167C300B8C534 /* MyTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB866D8B1D4167C300B8C534 /* MyTableCell.swift */; };
 		DB95E62D1D5251C000E329FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB95E62C1D5251C000E329FD /* Main.storyboard */; };
+		DB95E6311D53BC4200E329FD /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB95E6301D53BC4200E329FD /* ParseClient.swift */; };
 		DBB4B3E71D3E9C6E0093A07D /* InformationPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3E61D3E9C6E0093A07D /* InformationPostingViewController.swift */; };
-		DBB4B3F01D3EC15A0093A07D /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3EF1D3EC15A0093A07D /* NetworkClient.swift */; };
+		DBB4B3F01D3EC15A0093A07D /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3EF1D3EC15A0093A07D /* UdacityClient.swift */; };
 		DBB4B3F61D3ECF180093A07D /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3F51D3ECF180093A07D /* GCDBlackBox.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,8 +66,9 @@
 		DB866D891D3FC34600B8C534 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		DB866D8B1D4167C300B8C534 /* MyTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableCell.swift; sourceTree = "<group>"; };
 		DB95E62C1D5251C000E329FD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../../../../../.Trash/Main.storyboard; sourceTree = "<group>"; };
+		DB95E6301D53BC4200E329FD /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		DBB4B3E61D3E9C6E0093A07D /* InformationPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationPostingViewController.swift; sourceTree = "<group>"; };
-		DBB4B3EF1D3EC15A0093A07D /* NetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		DBB4B3EF1D3EC15A0093A07D /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		DBB4B3F51D3ECF180093A07D /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -183,7 +185,8 @@
 		DBB4B3EE1D3EC1090093A07D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DBB4B3EF1D3EC15A0093A07D /* NetworkClient.swift */,
+				DBB4B3EF1D3EC15A0093A07D /* UdacityClient.swift */,
+				DB95E6301D53BC4200E329FD /* ParseClient.swift */,
 				DB2E51DC1D4AB8F800018D8C /* CurrentUser.swift */,
 				DB2E51DE1D4FF81700018D8C /* StudentInformation.swift */,
 			);
@@ -325,11 +328,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBB4B3F61D3ECF180093A07D /* GCDBlackBox.swift in Sources */,
-				DBB4B3F01D3EC15A0093A07D /* NetworkClient.swift in Sources */,
+				DBB4B3F01D3EC15A0093A07D /* UdacityClient.swift in Sources */,
 				DB866D8C1D4167C300B8C534 /* MyTableCell.swift in Sources */,
 				DB866D8A1D3FC34600B8C534 /* TableViewController.swift in Sources */,
 				DBB4B3E71D3E9C6E0093A07D /* InformationPostingViewController.swift in Sources */,
 				DB866D881D3FC33700B8C534 /* MapViewController.swift in Sources */,
+				DB95E6311D53BC4200E329FD /* ParseClient.swift in Sources */,
 				DB311E281D3E905200810814 /* MyTextField.swift in Sources */,
 				DB163A251D3D31D30019A316 /* LoginViewController.swift in Sources */,
 				DB163A231D3D31D30019A316 /* AppDelegate.swift in Sources */,

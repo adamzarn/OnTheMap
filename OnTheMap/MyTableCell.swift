@@ -12,8 +12,8 @@ class MyTableCell: UITableViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     
-    func setCell(nameLabelText: String) {
-        self.nameLabel.text = nameLabelText
+    func setCell(nameLabelAttributedText: NSMutableAttributedString) {
+        self.nameLabel.attributedText = nameLabelAttributedText
     }
     
 }

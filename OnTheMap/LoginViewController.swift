@@ -31,6 +31,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = UIColor.orangeColor()
         emailTextField.text = "Email"
         passwordTextField.text = "Password"
+        emailTextField.autocorrectionType = .No
+        passwordTextField.autocorrectionType = .No
         loginButton.backgroundColor = UIColor(red: 0.9647, green: 0.3137, blue: 0.1255, alpha: 1.0)
         facebookLoginButton.backgroundColor = UIColor(red: 0.2313, green: 0.3490, blue: 0.5961, alpha: 1.0)
         
@@ -83,13 +85,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.activityIndicator.hidden = false
         self.activityIndicator.startAnimating()
         
-        NetworkClient.sharedInstance().login(emailTextField.text!, password: passwordTextField.text!, completion: { (result) -> () in
+        UdacityClient.sharedInstance().login(emailTextField.text!, password: passwordTextField.text!, completion: { (result) -> () in
             if let account = result!["account"] {
                 CurrentUser.userID = account["key"]!
                 let nextController = self.storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
                 self.activityIndicator.stopAnimating()
                 self.presentViewController(nextController,animated:true,completion:nil)
-                NetworkClient.sharedInstance().getUserData()
+                UdacityClient.sharedInstance().getUserData()
             } else {
                 self.errorLabel.text = "⚠️ Invalid Username or Password. Try Again."
                 self.activityIndicator.stopAnimating()
