@@ -49,13 +49,18 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @IBAction func startPost(sender: AnyObject) {
-        ParseClient.sharedInstance().doesStudentLocationExist { (objectID) -> () in
-            if objectID == "" {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let nextController = storyboard.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController
-                self.presentViewController(nextController, animated: true, completion: nil)
+        ParseClient.sharedInstance().doesStudentLocationExist { (objectID, error) -> () in
+            if let objectID = objectID {
+                if objectID == "" {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let nextController = storyboard.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController
+                    self.presentViewController(nextController, animated: true, completion: nil)
+                } else {
+                    CurrentUser.objectID = objectID
+                    self.presentViewController(self.alreadyPostedAlert, animated: true, completion: nil)
+                }
             } else {
-                self.presentViewController(self.alreadyPostedAlert, animated: true, completion: nil)
+                print(error)
             }
         }
     }
@@ -120,12 +125,13 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @IBAction func logoutPressed() {
-        UdacityClient.sharedInstance().logout { (result) -> () in
-            if let session = result!["session"] {
+        UdacityClient.sharedInstance().logout { (result, error) -> () in
+            if let result = result {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let nextController = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
                 self.presentViewController(nextController, animated: true, completion: nil)
             } else {
+                print(error)
                 self.presentViewController(self.unableToLogoutAlert, animated: true, completion: nil)
             }
         }

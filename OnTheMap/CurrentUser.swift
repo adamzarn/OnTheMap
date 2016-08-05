@@ -14,5 +14,6 @@ struct CurrentUser {
     static var firstName = "first name"
     static var lastName = "last name"
     static var objectID = "objectID"
+    static var updatedAt:AnyObject?
     
 }

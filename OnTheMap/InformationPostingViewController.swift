@@ -27,25 +27,48 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     
     let invalidAddressAlert:UIAlertController = UIAlertController(title: "Invalid Address", message: "Please enter a valid address.",preferredStyle: UIAlertControllerStyle.Alert)
     let invalidURLAlert:UIAlertController = UIAlertController(title: "Invalid URL", message: "You have entered an invalid URL, do you wish to continue?",preferredStyle: UIAlertControllerStyle.Alert)
+    let noLocationAlert:UIAlertController = UIAlertController(title: "No Location Entered", message: "Please enter a location.",preferredStyle: UIAlertControllerStyle.Alert)
+    let noLinkAlert:UIAlertController = UIAlertController(title: "No Link Entered", message: "Please enter a link.",preferredStyle: UIAlertControllerStyle.Alert)
     
     func postLocation() {
         if CurrentUser.objectID == "" {
-            ParseClient.sharedInstance().postLocation("POST",location:self.locationTextField.text!,link:self.linkTextField.text!,lat:String(self.lat!),long:String(self.long!))
+            ParseClient.sharedInstance().postLocation("POST",location:self.locationTextField.text!,link:self.linkTextField.text!,lat:String(self.lat!),long:String(self.long!), completion: { (result, error) -> () in
+                if let result = result {
+                    CurrentUser.updatedAt = result["updatedAt"]
+                } else {
+                    print(error)
+                }
+            })
         } else {
-            ParseClient.sharedInstance().postLocation("PUT",location:self.locationTextField.text!,link:self.linkTextField.text!,lat:String(self.lat!),long:String(self.long!))
+            ParseClient.sharedInstance().postLocation("PUT",location:self.locationTextField.text!,link:self.linkTextField.text!,lat:String(self.lat!),long:String(self.long!), completion: { (result, error) -> () in
+                if let result = result {
+                    CurrentUser.updatedAt = result["updatedAt"]
+                } else {
+                    print(error)
+                }
+            })
         }
         self.dismissViewControllerAnimated(false, completion: nil)
     }
     
     @IBAction func bottomButtonPressed(sender: AnyObject) {
         if bottomButton.titleLabel!.text == "Find on the Map" {
+            if locationTextField.text == "Enter Your Location Here" {
+                self.presentViewController(self.noLocationAlert, animated: true, completion: nil)
+            } else {
             self.geocode(locationTextField.text!)
-        } else {
+            }
+        }
+        if bottomButton.titleLabel!.text == "Submit" {
+            if linkTextField.text == "Enter a Link to Share Here" {
+                self.presentViewController(self.noLinkAlert, animated: true, completion: nil)
+            } else {
             isSuccess(URLVerified(linkTextField.text!), success: { () -> Void in
                 self.postLocation()
                 }, error: { () -> Void in
                 self.presentViewController(self.invalidURLAlert, animated: true, completion: nil)
-            })
+                })
+            }
         }
     }
     
@@ -63,7 +86,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         bottomButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         bottomButton.layer.borderWidth = 1
         bottomButton.layer.borderColor = UIColor.blackColor().CGColor
-        bottomButton.enabled = false
         view.backgroundColor = UIColor(red:0.3216,green:0.5333,blue:0.7137,alpha:1.0)
         startOver.enabled = true
         startOver.hidden = false
@@ -87,7 +109,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         bottomLabel.hidden = false
         bottomButton.setTitle("Find on the Map", forState: .Normal)
         bottomButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        bottomButton.enabled = false
         bottomButton.backgroundColor = UIColor.whiteColor()
         view.backgroundColor = UIColor(red:0.8784,green:0.8784,blue:0.8706,alpha:1.0)
         startOver.enabled = false
@@ -110,6 +131,10 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         linkTextField.autocorrectionType = .No
         
         invalidAddressAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        
+        noLocationAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        
+        noLinkAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
         
         invalidURLAlert.addAction(UIAlertAction(title:"Continue",
             style: UIAlertActionStyle.Default,
@@ -215,13 +240,11 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         textField.becomeFirstResponder()
         if textField.text == "Enter Your Location Here" {
             textField.text = ""
-            bottomButton.enabled = true
         }
         if textField.text == "Enter a Link to Share Here" {
             let attributedString = NSMutableAttributedString(string: "https://www.")
             attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0,12))
             linkTextField.attributedText = attributedString
-            bottomButton.enabled = true
         }
     }
     

@@ -103,17 +103,28 @@ class LoginViewController: UIViewController, UITextFieldDelegate//FBSDKLoginButt
         self.activityIndicator.hidden = false
         self.activityIndicator.startAnimating()
         
-        UdacityClient.sharedInstance().login(emailTextField.text!, password: passwordTextField.text!, completion: { (result) -> () in
-            if let account = result!["account"] {
-                CurrentUser.userID = account["key"]!
-                let nextController = self.storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
-                self.activityIndicator.stopAnimating()
-                self.presentViewController(nextController,animated:true,completion:nil)
-                UdacityClient.sharedInstance().getUserData()
+        UdacityClient.sharedInstance().login(emailTextField.text!, password: passwordTextField.text!, completion: { (result, error) -> () in
+            if let result = result {
+                if let account = result["account"] {
+                    CurrentUser.userID = account["key"]!
+                    let nextController = self.storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+                    self.activityIndicator.stopAnimating()
+                    self.presentViewController(nextController,animated:true,completion:nil)
+                    UdacityClient.sharedInstance().getUserData { (result, error) -> Void in
+                        if let result = result {
+                            CurrentUser.firstName = String(result["first_name"]!)
+                            CurrentUser.lastName = String(result["last_name"]!)
+                        } else {
+                            print(error)
+                        }
+                    }
+                } else {
+                    self.errorLabel.text = "⚠️ Invalid Username or Password. Try Again."
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.hidden = true
+                }
             } else {
-                self.errorLabel.text = "⚠️ Invalid Username or Password. Try Again."
-                self.activityIndicator.stopAnimating()
-                self.activityIndicator.hidden = true
+                print(error)
             }
         })
     }
