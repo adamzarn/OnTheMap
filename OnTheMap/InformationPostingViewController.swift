@@ -216,6 +216,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        //found how to add uneditable prefix to text field on StackOverflow from user Jeremy Pope: http://stackoverflow.com/questions/28434993/uneditable-prefix-inside-a-uitextfield-using-swift
         if textField == linkTextField {
             let protectedRange = NSMakeRange(0, 12)
             let intersection = NSIntersectionRange(protectedRange, range)
