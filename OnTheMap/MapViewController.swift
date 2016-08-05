@@ -15,6 +15,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     let alreadyPostedAlert:UIAlertController = UIAlertController(title: "Location Already Exists", message: "A location for you already exists, what would you like to do?",preferredStyle: UIAlertControllerStyle.Alert)
     let unableToLogoutAlert:UIAlertController = UIAlertController(title: "Unable to Logout", message: "You are unable to logout at this time.",preferredStyle: UIAlertControllerStyle.Alert)
+    let downloadFailedAlert:UIAlertController = UIAlertController(title: "Download Failed", message: "The download failed, please try again later.",preferredStyle: UIAlertControllerStyle.Alert)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             self.presentViewController(nextController, animated: true, completion: nil)
         }))
         unableToLogoutAlert.addAction(UIAlertAction(title:"OK",style: UIAlertActionStyle.Default, handler: nil))
+        downloadFailedAlert.addAction(UIAlertAction(title:"OK",style: UIAlertActionStyle.Default, handler: nil))
         alreadyPostedAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
         
     }
@@ -37,6 +39,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 self.setUpMapView()
             } else {
                 print(error)
+                self.presentViewController(self.downloadFailedAlert, animated: true, completion: nil)
             }
         }
     }
@@ -130,6 +133,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 self.presentViewController(nextController, animated: true, completion: nil)
             } else {
                 print(error)
+                self.dismissViewControllerAnimated(false, completion: nil)
                 self.presentViewController(self.unableToLogoutAlert, animated: true, completion: nil)
             }
         }

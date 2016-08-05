@@ -19,6 +19,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var facebookLoginButtonView: UIView!
     
+    let unableToConnectAlert:UIAlertController = UIAlertController(title: "Unable to Connect", message: "Check your connection and try again later.",preferredStyle: UIAlertControllerStyle.Alert)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,6 +60,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         activityIndicator.hidden = true
         
         facebookLoginButtonView.hidden = true
+        
+        unableToConnectAlert.addAction(UIAlertAction(title:"OK",style: UIAlertActionStyle.Default, handler: nil))
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -111,6 +116,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
             } else {
                 print(error)
+                self.presentViewController(self.unableToConnectAlert, animated: true, completion: nil)
             }
         })
     }
