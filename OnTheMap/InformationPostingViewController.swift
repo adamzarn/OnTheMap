@@ -30,6 +30,45 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     let noLocationAlert:UIAlertController = UIAlertController(title: "No Location Entered", message: "Please enter a location.",preferredStyle: UIAlertControllerStyle.Alert)
     let noLinkAlert:UIAlertController = UIAlertController(title: "No Link Entered", message: "Please enter a link.",preferredStyle: UIAlertControllerStyle.Alert)
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        myView.backgroundColor = UIColor(red:0.3216,green:0.5333,blue:0.7137,alpha:1.0)
+        
+        topLabel.font = UIFont(name: "AppleSDGothicNeo-Light", size: 30.0)
+        middleLabel.font = UIFont(name: "AppleSDGothicNeo-Light", size: 30.0)
+        bottomLabel.font = UIFont(name: "AppleSDGothicNeo-Light", size: 30.0)
+        
+        self.locationTextField.delegate = self
+        self.linkTextField.delegate = self
+        locationTextField.autocorrectionType = .No
+        linkTextField.autocorrectionType = .No
+        
+        invalidAddressAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        noLocationAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        noLinkAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        invalidURLAlert.addAction(UIAlertAction(title:"Continue", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in self.postLocation() }))
+        invalidURLAlert.addAction(UIAlertAction(title:"Cancel",style: UIAlertActionStyle.Default, handler: nil))
+        
+        locationTextField.font = UIFont(name: "Roboto-Regular", size:24.0)
+        linkTextField.font = UIFont(name: "Roboto-Regular", size:24.0)
+        bottomButton.titleLabel!.font = UIFont(name: "Roboto-Regular", size:17)
+        startOver.titleLabel!.font = UIFont(name: "Roboto-Regular", size:17)
+        
+        bottomButton.layer.cornerRadius = 5
+        bottomButton.layer.borderWidth = 1
+        bottomButton.layer.borderColor = UIColor.blackColor().CGColor
+        
+        startOver.setTitle("Start Over", forState: .Normal)
+        startOver.backgroundColor = UIColor.whiteColor()
+        startOver.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        startOver.layer.borderWidth = 1
+        startOver.layer.cornerRadius = 5
+        startOver.layer.borderColor = UIColor.blackColor().CGColor
+        
+        self.setUpView()
+    }
+    
     func postLocation() {
         if CurrentUser.objectID == "" {
             ParseClient.sharedInstance().postLocation("POST",location:self.locationTextField.text!,link:self.linkTextField.text!,lat:String(self.lat!),long:String(self.long!), completion: { (result, error) -> () in
@@ -73,20 +112,31 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     }
     
     func moveToLinkEntry() {
+        
+        view.backgroundColor = UIColor(red:0.3216,green:0.5333,blue:0.7137,alpha:1.0)
+        
         cancelButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        
         myView.hidden = true
+        
         myMapView.hidden = false
+        
         locationTextField.enabled = false
         locationTextField.hidden = true
+        
         linkTextField.hidden = false
+        linkTextField.enabled = true
+        
         topLabel.hidden = true
         middleLabel.hidden = true
         bottomLabel.hidden = true
+        
         bottomButton.setTitle("Submit", forState: .Normal)
         bottomButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         bottomButton.layer.borderWidth = 1
         bottomButton.layer.borderColor = UIColor.blackColor().CGColor
-        view.backgroundColor = UIColor(red:0.3216,green:0.5333,blue:0.7137,alpha:1.0)
+        
+        
         startOver.enabled = true
         startOver.hidden = false
     }
@@ -96,70 +146,33 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     }
     
     func setUpView() {
+        
+        view.backgroundColor = UIColor(red:0.8784,green:0.8784,blue:0.8706,alpha:1.0)
+        
         cancelButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        
         myView.hidden = false
+        
         myMapView.hidden = true
+        
         locationTextField.enabled = true
         locationTextField.hidden = false
         locationTextField.text = "Enter Your Location Here"
-        linkTextField.text = "Enter a Link to Share Here"
+        
+        linkTextField.enabled = false
         linkTextField.hidden = true
+        linkTextField.text = "Enter a Link to Share Here"
+
         topLabel.hidden = false
         middleLabel.hidden = false
         bottomLabel.hidden = false
+        
         bottomButton.setTitle("Find on the Map", forState: .Normal)
         bottomButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         bottomButton.backgroundColor = UIColor.whiteColor()
-        view.backgroundColor = UIColor(red:0.8784,green:0.8784,blue:0.8706,alpha:1.0)
+        
         startOver.enabled = false
         startOver.hidden = true
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        myView.backgroundColor = UIColor(red:0.3216,green:0.5333,blue:0.7137,alpha:1.0)
-        
-        topLabel.font = UIFont(name: "AppleSDGothicNeo-Light", size: 30.0)
-        middleLabel.font = UIFont(name: "AppleSDGothicNeo-Light", size: 30.0)
-        bottomLabel.font = UIFont(name: "AppleSDGothicNeo-Light", size: 30.0)
-        
-        self.locationTextField.delegate = self
-        self.linkTextField.delegate = self
-
-        locationTextField.autocorrectionType = .No
-        linkTextField.autocorrectionType = .No
-        
-        invalidAddressAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-        
-        noLocationAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-        
-        noLinkAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-        
-        invalidURLAlert.addAction(UIAlertAction(title:"Continue",
-            style: UIAlertActionStyle.Default,
-            handler: {(alert: UIAlertAction!) in
-                self.postLocation()}))
-        
-        invalidURLAlert.addAction(UIAlertAction(title:"Cancel",style: UIAlertActionStyle.Default, handler: nil))
-        
-        locationTextField.font = UIFont(name: "Roboto-Regular", size:24.0)
-        linkTextField.font = UIFont(name: "Roboto-Regular", size:24.0)
-        bottomButton.titleLabel!.font = UIFont(name: "Roboto-Regular", size:17)
-        startOver.titleLabel!.font = UIFont(name: "Roboto-Regular", size:17)
-        
-        bottomButton.layer.cornerRadius = 5
-        bottomButton.layer.borderWidth = 1
-        bottomButton.layer.borderColor = UIColor.blackColor().CGColor
-        
-        startOver.setTitle("Start Over", forState: .Normal)
-        startOver.backgroundColor = UIColor.whiteColor()
-        startOver.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        startOver.layer.borderWidth = 1
-        startOver.layer.cornerRadius = 5
-        startOver.layer.borderColor = UIColor.blackColor().CGColor
-        
-        self.setUpView()
     }
     
     func isSuccess(val:Bool, success: () -> Void, error: () -> Void) {
@@ -191,34 +204,12 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         annotation.title = locationTextField.text!
-        annotation.subtitle = ""
         
         annotations.append(annotation)
 
         self.myMapView.addAnnotations(annotations)
         
     }
-    
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        let reuseId = "pin"
-        
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
-        
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
-            pinView!.pinColor = .Red
-            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-        }
-        else {
-            pinView!.annotation = annotation
-        }
-        
-        return pinView
-    }
-
-
     
     @IBAction func cancelButtonPressed(sender: AnyObject) {
         self.dismissViewControllerAnimated(false, completion: nil)
@@ -248,14 +239,6 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         }
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
-    }
-    
-    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -271,13 +254,12 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
                 let placemark = placemarks?[0]
                 let location = placemark?.location
                 let coordinate = location?.coordinate
+                
                 self.lat = coordinate?.latitude
                 self.long = coordinate?.longitude
+                
                 self.setUpMapView()
                 self.moveToLinkEntry()
-                if placemark?.areasOfInterest?.count > 0 {
-                } else {
-                }
             }
         })
     }

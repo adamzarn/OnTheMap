@@ -13,39 +13,39 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var myTableView: UITableView!
     
     let alreadyPostedAlert:UIAlertController = UIAlertController(title: "Location Already Exists", message: "A location for you already exists, what would you like to do?",preferredStyle: UIAlertControllerStyle.Alert)
-    
     let unableToLogoutAlert:UIAlertController = UIAlertController(title: "Unable to Logout", message: "You are unable to logout at this time.",preferredStyle: UIAlertControllerStyle.Alert)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.unableToLogoutAlert.addAction(UIAlertAction(title:"OK",style: UIAlertActionStyle.Default, handler: nil))
-        ParseClient.sharedInstance().getLocationData { (result) -> () in
-            self.myTableView.reloadData()
-        }
         
-        alreadyPostedAlert.addAction(UIAlertAction(title:"Overwrite",
-            style: UIAlertActionStyle.Default,
-            handler: {(alert: UIAlertAction!) in
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let nextController = storyboard.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController
-                self.presentViewController(nextController, animated: true, completion: nil)
-        })
-        )
+        self.getLocationData()
         
+        alreadyPostedAlert.addAction(UIAlertAction(title:"Overwrite", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let nextController = storyboard.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController
+            self.presentViewController(nextController, animated: true, completion: nil)
+        }))
+        unableToLogoutAlert.addAction(UIAlertAction(title:"OK",style: UIAlertActionStyle.Default, handler: nil))
         alreadyPostedAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+        
+    }
+    
+    func getLocationData() {
+        ParseClient.sharedInstance().getLocationData { (result, error) -> () in
+            if let result = result {
+                self.myTableView.reloadData()
+            } else {
+            print(error)
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
-        ParseClient.sharedInstance().getLocationData { (result) -> () in
-            self.myTableView.reloadData()
-        }
+        self.getLocationData()
     }
     
     @IBAction func refreshData(sender: AnyObject) {
-        ParseClient.sharedInstance().getLocationData { (result) -> () in
-            self.myTableView.reloadData()
-        }
-
+        self.getLocationData()
     }
     
     @IBAction func startPost(sender: AnyObject) {
@@ -82,12 +82,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let startPlace = first.characters.count + last.characters.count + 2
         let lengthPlace = place.characters.count
         
-        rowText = NSMutableAttributedString(string:first + " " + last + " " + place)
-        rowText.addAttribute(NSFontAttributeName,
-                             value: UIFont(name:"Georgia",
-                size:10.0)!,
-                range: NSRange(location: startPlace,length: lengthPlace)
-        )
+        rowText = NSMutableAttributedString(string: first + " " + last + " " + place)
+        rowText.addAttribute(NSFontAttributeName, value: UIFont(name:"Georgia",size:10.0)!,range: NSRange(location: startPlace,length: lengthPlace))
         
         if StudentInformation.studentInformationArray.count == 0 {
             return cell
@@ -96,7 +92,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
             
         return cell
-        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

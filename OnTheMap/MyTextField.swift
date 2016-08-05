@@ -23,4 +23,5 @@ class MyTextField: UITextField {
     override func editingRectForBounds(bounds: CGRect) -> CGRect {
         return UIEdgeInsetsInsetRect(bounds, padding)
     }
+    
 }

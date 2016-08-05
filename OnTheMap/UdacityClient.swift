@@ -169,6 +169,4 @@ class UdacityClient: NSObject {
         return Singleton.sharedInstance
     }
 
-    
-    
 }

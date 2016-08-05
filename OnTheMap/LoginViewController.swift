@@ -7,11 +7,8 @@
 //
 
 import UIKit
-//import FBSDKLoginKit
 
-
-class LoginViewController: UIViewController, UITextFieldDelegate//FBSDKLoginButtonDelegate
-    {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var emailTextField: MyTextField!
@@ -22,41 +19,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate//FBSDKLoginButt
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var facebookLoginButtonView: UIView!
     
-    @IBAction func signUpButtonPressed(sender: AnyObject) {
-        if let url = NSURL(string: "https://www.udacity.com/account/auth#!/signup") {
-            UIApplication.sharedApplication().openURL(url)
-        }
-    }
-    
-    //func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-        
-    //}
-    
-    //func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
-        
-    //}
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //let loginButton = FBSDKLoginButton()
-        //loginButton.center = self.view.center
-        //loginButton.readPermissions = ["email"]
-        //self.view.addSubview(loginButton)
-        //loginButton.delegate = self
-        
-        errorLabel.text = ""
-        
-        emailTextField.text = "Email"
-        passwordTextField.text = "Password"
-        signUpButton.titleLabel!.text = "Don't have an account? Sign up."
-        emailTextField.autocorrectionType = .No
-        passwordTextField.autocorrectionType = .No
-        loginButton.backgroundColor = UIColor(red: 0.9647, green: 0.3137, blue: 0.1255, alpha: 1.0)
-        facebookLoginButtonView.backgroundColor = UIColor(red: 0.2313, green: 0.3490, blue: 0.5961, alpha: 1.0)
         
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
+        emailTextField.autocorrectionType = .No
+        passwordTextField.autocorrectionType = .No
+        
+        loginLabel.text = "Login to Udacity"
+        emailTextField.text = "Email"
+        passwordTextField.text = "Password"
+        signUpButton.titleLabel!.text = "Don't have an account? Sign up."
+        errorLabel.text = ""
+        
+        loginButton.backgroundColor = UIColor(red: 0.9647, green: 0.3137, blue: 0.1255, alpha: 1.0)
+        facebookLoginButtonView.backgroundColor = UIColor(red: 0.2313, green: 0.3490, blue: 0.5961, alpha: 1.0)
         
         emailTextField.layer.cornerRadius = 5
         passwordTextField.layer.cornerRadius = 5
@@ -78,6 +56,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate//FBSDKLoginButt
         view.layer.insertSublayer(backgroundGradient, atIndex: 0)
         
         activityIndicator.hidden = true
+        
+        facebookLoginButtonView.hidden = true
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -88,6 +68,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate//FBSDKLoginButt
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func signUpButtonPressed(sender: AnyObject) {
+        if let url = NSURL(string: "https://www.udacity.com/account/auth#!/signup") {
+            UIApplication.sharedApplication().openURL(url)
+        }
     }
     
     @IBAction func loginPressed(sender: AnyObject) {
@@ -150,11 +136,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate//FBSDKLoginButt
                 textField.text = "Password"
             }
         }
-    }
-    
-    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
     }
 
     func textFieldShouldReturn(textField: UITextField) -> Bool {
