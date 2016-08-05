@@ -50,6 +50,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    @IBAction func refreshData(sender: AnyObject) {
+        ParseClient.sharedInstance().getLocationData { (result) -> () in
+            self.setUpMapView()
+        }
+    }
+ 
     override func viewWillAppear(animated: Bool) {
         ParseClient.sharedInstance().getLocationData { (result) -> () in
             self.setUpMapView()

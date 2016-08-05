@@ -20,11 +20,14 @@
 		DB866D881D3FC33700B8C534 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB866D871D3FC33700B8C534 /* MapViewController.swift */; };
 		DB866D8A1D3FC34600B8C534 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB866D891D3FC34600B8C534 /* TableViewController.swift */; };
 		DB866D8C1D4167C300B8C534 /* MyTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB866D8B1D4167C300B8C534 /* MyTableCell.swift */; };
-		DB95E62D1D5251C000E329FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB95E62C1D5251C000E329FD /* Main.storyboard */; };
 		DB95E6311D53BC4200E329FD /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB95E6301D53BC4200E329FD /* ParseClient.swift */; };
 		DBB4B3E71D3E9C6E0093A07D /* InformationPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3E61D3E9C6E0093A07D /* InformationPostingViewController.swift */; };
 		DBB4B3F01D3EC15A0093A07D /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3EF1D3EC15A0093A07D /* UdacityClient.swift */; };
 		DBB4B3F61D3ECF180093A07D /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB4B3F51D3ECF180093A07D /* GCDBlackBox.swift */; };
+		DBBB87E51D53E4C000EE2CEC /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBBB87E21D53E4BF00EE2CEC /* FBSDKCoreKit.framework */; };
+		DBBB87E61D53E4C000EE2CEC /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBBB87E31D53E4C000EE2CEC /* FBSDKLoginKit.framework */; };
+		DBBB87E71D53E4C000EE2CEC /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBBB87E41D53E4C000EE2CEC /* FBSDKShareKit.framework */; };
+		DBBB87EB1D53EA0C00EE2CEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBBB87EA1D53EA0C00EE2CEC /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,11 +68,14 @@
 		DB866D871D3FC33700B8C534 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		DB866D891D3FC34600B8C534 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		DB866D8B1D4167C300B8C534 /* MyTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableCell.swift; sourceTree = "<group>"; };
-		DB95E62C1D5251C000E329FD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../../../../../.Trash/Main.storyboard; sourceTree = "<group>"; };
 		DB95E6301D53BC4200E329FD /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		DBB4B3E61D3E9C6E0093A07D /* InformationPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationPostingViewController.swift; sourceTree = "<group>"; };
 		DBB4B3EF1D3EC15A0093A07D /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		DBB4B3F51D3ECF180093A07D /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
+		DBBB87E21D53E4BF00EE2CEC /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		DBBB87E31D53E4C000EE2CEC /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		DBBB87E41D53E4C000EE2CEC /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		DBBB87EA1D53EA0C00EE2CEC /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +83,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBBB87E71D53E4C000EE2CEC /* FBSDKShareKit.framework in Frameworks */,
 				DB163A511D3D629F0019A316 /* MapKit.framework in Frameworks */,
+				DBBB87E51D53E4C000EE2CEC /* FBSDKCoreKit.framework in Frameworks */,
+				DBBB87E61D53E4C000EE2CEC /* FBSDKLoginKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +110,9 @@
 		DB163A161D3D31D20019A316 = {
 			isa = PBXGroup;
 			children = (
+				DBBB87E21D53E4BF00EE2CEC /* FBSDKCoreKit.framework */,
+				DBBB87E31D53E4C000EE2CEC /* FBSDKLoginKit.framework */,
+				DBBB87E41D53E4C000EE2CEC /* FBSDKShareKit.framework */,
 				DB163A501D3D629F0019A316 /* MapKit.framework */,
 				DB163A211D3D31D30019A316 /* OnTheMap */,
 				DB163A361D3D31D30019A316 /* OnTheMapTests */,
@@ -165,8 +177,8 @@
 			isa = PBXGroup;
 			children = (
 				DB163A291D3D31D30019A316 /* Assets.xcassets */,
-				DB95E62C1D5251C000E329FD /* Main.storyboard */,
 				DB163A2B1D3D31D30019A316 /* LaunchScreen.storyboard */,
+				DBBB87EA1D53EA0C00EE2CEC /* Main.storyboard */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -300,7 +312,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB95E62D1D5251C000E329FD /* Main.storyboard in Resources */,
+				DBBB87EB1D53EA0C00EE2CEC /* Main.storyboard in Resources */,
 				DB163A2D1D3D31D30019A316 /* LaunchScreen.storyboard in Resources */,
 				DB163A2A1D3D31D30019A316 /* Assets.xcassets in Resources */,
 			);
@@ -474,6 +486,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AJZ.OnTheMap;
@@ -485,6 +502,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AJZ.OnTheMap;

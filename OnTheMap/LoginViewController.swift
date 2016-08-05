@@ -7,18 +7,20 @@
 //
 
 import UIKit
-import MapKit
+//import FBSDKLoginKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+
+class LoginViewController: UIViewController, UITextFieldDelegate//FBSDKLoginButtonDelegate
+    {
     
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var emailTextField: MyTextField!
     @IBOutlet weak var passwordTextField: MyTextField!
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var facebookLoginButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var facebookLoginButtonView: UIView!
     
     @IBAction func signUpButtonPressed(sender: AnyObject) {
         if let url = NSURL(string: "https://www.udacity.com/account/auth#!/signup") {
@@ -26,15 +28,32 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    //func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        
+    //}
+    
+    //func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+        
+    //}
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.orangeColor()
+
+        //let loginButton = FBSDKLoginButton()
+        //loginButton.center = self.view.center
+        //loginButton.readPermissions = ["email"]
+        //self.view.addSubview(loginButton)
+        //loginButton.delegate = self
+        
+        errorLabel.text = ""
+        
         emailTextField.text = "Email"
         passwordTextField.text = "Password"
+        signUpButton.titleLabel!.text = "Don't have an account? Sign up."
         emailTextField.autocorrectionType = .No
         passwordTextField.autocorrectionType = .No
         loginButton.backgroundColor = UIColor(red: 0.9647, green: 0.3137, blue: 0.1255, alpha: 1.0)
-        facebookLoginButton.backgroundColor = UIColor(red: 0.2313, green: 0.3490, blue: 0.5961, alpha: 1.0)
+        facebookLoginButtonView.backgroundColor = UIColor(red: 0.2313, green: 0.3490, blue: 0.5961, alpha: 1.0)
         
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
@@ -42,13 +61,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         emailTextField.layer.cornerRadius = 5
         passwordTextField.layer.cornerRadius = 5
         loginButton.layer.cornerRadius = 5
-        facebookLoginButton.layer.cornerRadius = 5
+        facebookLoginButtonView.layer.cornerRadius = 5
         
         loginLabel.font = UIFont(name: "Roboto-Regular", size:17)
         emailTextField.font = UIFont(name: "Roboto-Regular", size:17)
         passwordTextField.font = UIFont(name: "Roboto-Regular", size:17)
         loginButton.titleLabel!.font = UIFont(name: "Roboto-Regular", size:17)
-        facebookLoginButton.titleLabel!.font = UIFont(name: "Roboto-Regular", size:17)
         signUpButton.titleLabel!.font = UIFont(name: "Roboto-Regular", size:17)
         
         let backgroundGradient = CAGradientLayer()
