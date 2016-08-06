@@ -61,14 +61,14 @@ class ParseClient: NSObject {
     
     func postLocation(methodType: String, location: String, link: String, lat: String, long: String, completion: (result: [String:AnyObject]?, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-        var method = ""
-        if CurrentUser.objectID == "" {
-            method = ""
-        } else {
-            method = "/\(CurrentUser.objectID)"
+        var method = "https://parse.udacity.com/parse/classes/StudentLocation"
+        if CurrentUser.objectID != "" {
+            method =  "\(method)/\(CurrentUser.objectID)"
         }
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://parse.udacity.com/parse/classes/StudentLocation\(method)")!)
+        print(method)
+            
+        let request = NSMutableURLRequest(URL: NSURL(string: method)!)
         request.HTTPMethod = methodType
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")

@@ -13,7 +13,7 @@ struct CurrentUser {
     static var userID:AnyObject?
     static var firstName = "first name"
     static var lastName = "last name"
-    static var objectID = "objectID"
+    static var objectID = ""
     static var updatedAt:AnyObject?
     
 }

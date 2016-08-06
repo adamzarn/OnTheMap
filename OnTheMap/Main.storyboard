@@ -353,6 +353,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter Your Location Here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r0g-hu-dGr">
+                                <rect key="frame" x="20" y="263" width="374" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="9zY-i7-EOm">
                                 <rect key="frame" x="100" y="622" width="214" height="64"/>
                                 <subviews>
@@ -372,13 +379,9 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter Your Location Here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r0g-hu-dGr">
-                                <rect key="frame" x="20" y="263" width="374" height="30"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="yNb-S9-idZ">
+                                <rect key="frame" x="197" y="167" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -409,10 +412,12 @@
                             <constraint firstItem="fte-GI-Ooi" firstAttribute="centerY" secondItem="r0g-hu-dGr" secondAttribute="centerY" id="lCK-H9-TM7"/>
                             <constraint firstItem="c2R-Yi-n6B" firstAttribute="top" secondItem="fte-GI-Ooi" secondAttribute="bottom" constant="160" id="ovX-rP-8Z4"/>
                             <constraint firstItem="fte-GI-Ooi" firstAttribute="leading" secondItem="yRY-If-xVs" secondAttribute="leadingMargin" constant="-20" id="qMZ-Fw-LEY"/>
+                            <constraint firstItem="yNb-S9-idZ" firstAttribute="centerX" secondItem="yRY-If-xVs" secondAttribute="centerX" id="rDF-Pc-EkQ"/>
                             <constraint firstItem="1Qv-ko-kdX" firstAttribute="leading" secondItem="yRY-If-xVs" secondAttribute="leadingMargin" constant="-20" id="tpy-Yh-RBM"/>
                             <constraint firstItem="1Qv-ko-kdX" firstAttribute="top" secondItem="fte-GI-Ooi" secondAttribute="top" id="xAN-h5-uCn"/>
                             <constraint firstItem="c2R-Yi-n6B" firstAttribute="top" secondItem="1Qv-ko-kdX" secondAttribute="bottom" id="xCt-Kx-asy"/>
                             <constraint firstItem="9zY-i7-EOm" firstAttribute="leading" secondItem="yRY-If-xVs" secondAttribute="leadingMargin" constant="80" id="y3i-Lw-gaC"/>
+                            <constraint firstItem="1Qv-ko-kdX" firstAttribute="top" secondItem="yNb-S9-idZ" secondAttribute="bottom" constant="8" id="yTu-jH-hPM"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -434,6 +439,7 @@
                         <outlet property="cancelButton" destination="ikc-yx-PdL" id="6zm-Je-Mvq"/>
                         <outlet property="linkTextField" destination="MaO-bl-xih" id="EfP-ha-gkT"/>
                         <outlet property="locationTextField" destination="r0g-hu-dGr" id="XAS-n9-wya"/>
+                        <outlet property="mapLoadingIndicator" destination="yNb-S9-idZ" id="i5Z-vl-a8K"/>
                         <outlet property="middleLabel" destination="svU-93-afK" id="ZF2-Tm-zCn"/>
                         <outlet property="myMapView" destination="1Qv-ko-kdX" id="uk6-Zp-JhC"/>
                         <outlet property="myView" destination="fte-GI-Ooi" id="lLx-2h-sxo"/>

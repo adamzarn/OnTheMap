@@ -21,6 +21,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     @IBOutlet weak var myView: UIView!
     @IBOutlet weak var startOver: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var mapLoadingIndicator: UIActivityIndicatorView!
     
     var lat: Double?
     var long: Double?
@@ -29,6 +30,8 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     let invalidURLAlert:UIAlertController = UIAlertController(title: "Invalid URL", message: "You have entered an invalid URL, do you wish to continue?",preferredStyle: UIAlertControllerStyle.Alert)
     let noLocationAlert:UIAlertController = UIAlertController(title: "No Location Entered", message: "Please enter a location.",preferredStyle: UIAlertControllerStyle.Alert)
     let noLinkAlert:UIAlertController = UIAlertController(title: "No Link Entered", message: "Please enter a link.",preferredStyle: UIAlertControllerStyle.Alert)
+    let unableToPostAlert:UIAlertController = UIAlertController(title: "Unable to post your location. Please check your connection or try again later.", message: "Please enter a link.",preferredStyle: UIAlertControllerStyle.Alert)
+    let unableToUpdateAlert:UIAlertController = UIAlertController(title: "Unable to update your location.", message: "Please check your connection or try again later.",preferredStyle: UIAlertControllerStyle.Alert)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +52,12 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         noLinkAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
         invalidURLAlert.addAction(UIAlertAction(title:"Continue", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in self.postLocation() }))
         invalidURLAlert.addAction(UIAlertAction(title:"Cancel",style: UIAlertActionStyle.Default, handler: nil))
+        unableToPostAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
+            self.dismissViewControllerAnimated(false,completion:nil)
+            }))
+        unableToUpdateAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
+            self.dismissViewControllerAnimated(false,completion:nil)
+        }))
         
         locationTextField.font = UIFont(name: "Roboto-Regular", size:24.0)
         linkTextField.font = UIFont(name: "Roboto-Regular", size:24.0)
@@ -66,6 +75,8 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         startOver.layer.cornerRadius = 5
         startOver.layer.borderColor = UIColor.blackColor().CGColor
         
+        mapLoadingIndicator.hidden = true
+        
         self.setUpView()
     }
     
@@ -74,20 +85,27 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
             ParseClient.sharedInstance().postLocation("POST",location:self.locationTextField.text!,link:self.linkTextField.text!,lat:String(self.lat!),long:String(self.long!), completion: { (result, error) -> () in
                 if let result = result {
                     CurrentUser.updatedAt = result["updatedAt"]
+                    self.dismissViewControllerAnimated(false, completion: nil)
                 } else {
                     print(error)
+                    NSOperationQueue.mainQueue().addOperationWithBlock {
+                        self.presentViewController(self.unableToPostAlert,animated:true,completion:nil)
+                    }
                 }
             })
         } else {
             ParseClient.sharedInstance().postLocation("PUT",location:self.locationTextField.text!,link:self.linkTextField.text!,lat:String(self.lat!),long:String(self.long!), completion: { (result, error) -> () in
                 if let result = result {
                     CurrentUser.updatedAt = result["updatedAt"]
+                        self.dismissViewControllerAnimated(false, completion: nil)
                 } else {
                     print(error)
+                    NSOperationQueue.mainQueue().addOperationWithBlock {
+                        self.presentViewController(self.unableToUpdateAlert,animated:true,completion:nil)
+                    }
                 }
             })
         }
-        self.dismissViewControllerAnimated(false, completion: nil)
     }
     
     @IBAction func bottomButtonPressed(sender: AnyObject) {
@@ -246,7 +264,11 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     }
     
     func geocode(address: String) {
+        mapLoadingIndicator.hidden = false
+        mapLoadingIndicator.startAnimating()
         CLGeocoder().geocodeAddressString(address, completionHandler: { (placemarks, error) in
+            self.mapLoadingIndicator.stopAnimating()
+            self.mapLoadingIndicator.hidden = true
             if error != nil {
                 self.presentViewController(self.invalidAddressAlert, animated: true, completion: nil)
                 return
