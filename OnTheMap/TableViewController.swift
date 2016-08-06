@@ -15,6 +15,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let alreadyPostedAlert:UIAlertController = UIAlertController(title: "Location Already Exists", message: "A location for you already exists, what would you like to do?",preferredStyle: UIAlertControllerStyle.Alert)
     let unableToLogoutAlert:UIAlertController = UIAlertController(title: "Unable to Logout", message: "You are unable to logout at this time.",preferredStyle: UIAlertControllerStyle.Alert)
     let downloadFailedAlert:UIAlertController = UIAlertController(title: "Download Failed", message: "The download failed, please try again later.",preferredStyle: UIAlertControllerStyle.Alert)
+    let invalidURLAlert:UIAlertController = UIAlertController(title: "Invalid URL", message: "The URL that was provided is invalid.",preferredStyle: UIAlertControllerStyle.Alert)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         unableToLogoutAlert.addAction(UIAlertAction(title:"OK",style: UIAlertActionStyle.Default, handler: nil))
         downloadFailedAlert.addAction(UIAlertAction(title:"OK",style: UIAlertActionStyle.Default, handler: nil))
         alreadyPostedAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+        invalidURLAlert.addAction(UIAlertAction(title:"OK",style: UIAlertActionStyle.Default, handler: nil))
         
     }
     
@@ -102,15 +104,27 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let currentStudent = StudentInformation.studentInformationArray[indexPath.row]
         
         let app = UIApplication.sharedApplication()
-        if let toOpen = currentStudent.mediaURL {
-            if URLVerified(toOpen as? String) {
-                app.openURL(NSURL(string: toOpen as! String)!)
-            } else {
-                self.myTableView.reloadData()
-            }
+        if let toOpen = currentStudent.mediaURL as? String {
+            
+            isSuccess(URLVerified(toOpen), success: { () -> Void in
+                app.openURL(NSURL(string: toOpen)!)
+                }, error: { () -> Void in
+                    self.presentViewController(self.invalidURLAlert, animated: true, completion: nil)
+                })
+            
+        } else {
+            self.presentViewController(self.invalidURLAlert, animated: true, completion: nil)
         }
     }
-    
+
+    func isSuccess(val:Bool, success: () -> Void, error: () -> Void) {
+        if val {
+            success()
+        } else {
+            error()
+        }
+    }
+
     func URLVerified(urlString: String?) -> Bool {
         if let url = NSURL(string: urlString!) {
             if UIApplication.sharedApplication().canOpenURL(url) {
@@ -121,7 +135,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         return false
     }
-    
+
     @IBAction func logoutPressed() {
         UdacityClient.sharedInstance().logout { (result, error) -> () in
             if let result = result {
@@ -135,5 +149,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
     }
-    
+
 }
+

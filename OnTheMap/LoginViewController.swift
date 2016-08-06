@@ -19,7 +19,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var facebookLoginButtonView: UIView!
     
-    let unableToConnectAlert:UIAlertController = UIAlertController(title: "Unable to Connect", message: "Check your connection and try again later.",preferredStyle: UIAlertControllerStyle.Alert)
+    let unableToConnectAlert:UIAlertController = UIAlertController(title: "Unable to Connect", message: "Check your connection or try again later.",preferredStyle: UIAlertControllerStyle.Alert)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,6 +116,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
             } else {
                 print(error)
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.hidden = true
                 self.presentViewController(self.unableToConnectAlert, animated: true, completion: nil)
             }
         })
