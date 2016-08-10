@@ -8,6 +8,7 @@
 
 
 import UIKit
+import FBSDKLoginKit
 
 class UdacityClient: NSObject {
     
@@ -27,6 +28,63 @@ class UdacityClient: NSObject {
                 completion(result: nil, error: NSError(domain: "login", code: 1, userInfo: userInfo))
             }
 
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error)")
+                return
+            }
+            
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                sendError("Your request returned a status code other than 2xx!")
+                return
+            }
+            
+            guard let data = data else {
+                sendError("No data was returned by the request!")
+                return
+            }
+            
+            let newData = data.subdataWithRange(NSMakeRange(5, data.length-5))
+            
+            var parsedResult: AnyObject!
+            do {
+                parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
+            } catch {
+                print("error")
+                return
+            }
+            if let sessionRequest = parsedResult as? [String:AnyObject] {
+                performUIUpdatesOnMain {
+                    completion(result: sessionRequest, error: nil)
+                }
+            }
+        }
+        task.resume()
+        return task
+    }
+    
+    func FBLogin(facebookToken: String?, completion: (result: [String:AnyObject]?, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+        request.HTTPMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        var loginBody = [String:AnyObject]()
+        
+        if let facebookToken = facebookToken {
+            loginBody["facebook_mobile"] = ["access_token" : facebookToken]
+        }
+        
+        request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(loginBody, options: NSJSONWritingOptions())
+        print(request.HTTPBody)
+        
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            
+            func sendError(error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey : error]
+                completion(result: nil, error: NSError(domain: "FBlogin", code: 1, userInfo: userInfo))
+            }
+            
             guard (error == nil) else {
                 sendError("There was an error with your request: \(error)")
                 return

@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import FBSDKCoreKit
+import FBSDKLoginKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButtonDelegate {
     
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var emailTextField: MyTextField!
@@ -17,12 +19,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var facebookLoginButtonView: UIView!
+    @IBOutlet weak var FBLoginButton: FBSDKLoginButton!
     
     let unableToConnectAlert:UIAlertController = UIAlertController(title: "Unable to Connect", message: "Check your connection or try again later.",preferredStyle: UIAlertControllerStyle.Alert)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        FBLoginButton.readPermissions = ["email"]
+        FBLoginButton.delegate = self
         
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
@@ -36,12 +41,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         errorLabel.text = ""
         
         loginButton.backgroundColor = UIColor(red: 0.9647, green: 0.3137, blue: 0.1255, alpha: 1.0)
-        facebookLoginButtonView.backgroundColor = UIColor(red: 0.2313, green: 0.3490, blue: 0.5961, alpha: 1.0)
-        
+
         emailTextField.layer.cornerRadius = 5
         passwordTextField.layer.cornerRadius = 5
         loginButton.layer.cornerRadius = 5
-        facebookLoginButtonView.layer.cornerRadius = 5
+        FBLoginButton.layer.cornerRadius = 5
         
         loginLabel.font = UIFont(name: "Roboto-Regular", size:17)
         emailTextField.font = UIFont(name: "Roboto-Regular", size:17)
@@ -58,8 +62,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.layer.insertSublayer(backgroundGradient, atIndex: 0)
         
         activityIndicator.hidden = true
-        
-        facebookLoginButtonView.hidden = true
         
         unableToConnectAlert.addAction(UIAlertAction(title:"OK",style: UIAlertActionStyle.Default, handler: nil))
         
@@ -79,6 +81,45 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if let url = NSURL(string: "https://www.udacity.com/account/auth#!/signup") {
             UIApplication.sharedApplication().openURL(url)
         }
+    }
+    
+    func currentAccessToken() -> FBSDKAccessToken! {
+        return FBSDKAccessToken.currentAccessToken()
+    }
+    
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        UdacityClient.sharedInstance().FBLogin(currentAccessToken().tokenString, completion: { (result, error) -> () in
+            if let result = result {
+                if let account = result["account"] {
+                    CurrentUser.userID = account["key"]!
+                    let nextController = self.storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+                    self.activityIndicator.stopAnimating()
+                    self.presentViewController(nextController,animated:true,completion:nil)
+                    UdacityClient.sharedInstance().getUserData { (result, error) -> Void in
+                        if let result = result {
+                            CurrentUser.firstName = String(result["first_name"]!)
+                            CurrentUser.lastName = String(result["last_name"]!)
+                        } else {
+                            print(error)
+                        }
+                    }
+                } else {
+                    self.errorLabel.text = "⚠️ Invalid Username or Password. Try Again."
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.hidden = true
+                }
+            } else {
+                print(error)
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.hidden = true
+                self.presentViewController(self.unableToConnectAlert, animated: true, completion: nil)
+            }
+        print("logged in")
+        })
+    }
+    
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+        print("logged out")
     }
     
     @IBAction func loginPressed(sender: AnyObject) {

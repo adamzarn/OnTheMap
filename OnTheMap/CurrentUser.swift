@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
 struct CurrentUser {
     
@@ -15,5 +16,6 @@ struct CurrentUser {
     static var lastName = "last name"
     static var objectID = ""
     static var updatedAt:AnyObject?
+    static var facebookToken:FBSDKAccessToken?
     
 }
