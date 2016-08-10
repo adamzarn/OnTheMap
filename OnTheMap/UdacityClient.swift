@@ -67,15 +67,9 @@ class UdacityClient: NSObject {
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        var loginBody = [String:AnyObject]()
-        
-        if let facebookToken = facebookToken {
-            loginBody["facebook_mobile"] = ["access_token" : facebookToken]
-        }
-        
-        request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(loginBody, options: NSJSONWritingOptions())
-        print(request.HTTPBody)
-        
+        print(facebookToken)
+        request.HTTPBody = "{\"facebook_mobile\": {\"access_token\": \"\(facebookToken)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
+
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
