@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import FBSDKLoginKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
@@ -83,21 +84,23 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         var annotations = [MKPointAnnotation]()
     
         for studentInfo in locations {
-            let lat = CLLocationDegrees(studentInfo.latitude as! Double)
-            let long = CLLocationDegrees(studentInfo.longitude as! Double)
+            if let latitude = studentInfo.latitude, longitude = studentInfo.longitude {
+                let lat = CLLocationDegrees(latitude as! Double)
+                let long = CLLocationDegrees(longitude as! Double)
     
-            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
     
-            let first = studentInfo.firstName as! String
-            let last = studentInfo.lastName as! String
-            let mediaURL = studentInfo.mediaURL as! String
+                let first = studentInfo.firstName as! String
+                let last = studentInfo.lastName as! String
+                let mediaURL = studentInfo.mediaURL as! String
     
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-            annotation.title = "\(first) \(last)"
-            annotation.subtitle = mediaURL
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                annotation.title = "\(first) \(last)"
+                annotation.subtitle = mediaURL
     
-            annotations.append(annotation)
+                annotations.append(annotation)
+            }
         }
         self.myMapView.addAnnotations(annotations)
     }
@@ -157,6 +160,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func logoutPressed() {
+        
+        if CurrentUser.facebookToken != nil {
+            let loginManager = FBSDKLoginManager()
+            loginManager.logOut()
+        }
+        
         UdacityClient.sharedInstance().logout { (result, error) -> () in
             if let result = result {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)

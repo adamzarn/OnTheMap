@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
 class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -81,22 +82,25 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         var rowText = NSMutableAttributedString()
         
-        let first = currentStudent.firstName as! String
-        let last = currentStudent.lastName as! String
-        let place = currentStudent.mapString as! String
-        let startPlace = first.characters.count + last.characters.count + 2
-        let lengthPlace = place.characters.count
+        if let first = currentStudent.firstName, last = currentStudent.lastName, place = currentStudent.mapString {
+            let first = first as! String
+            let last = last as! String
+            let place = place as! String
+            let startPlace = first.characters.count + last.characters.count + 2
+            let lengthPlace = place.characters.count
         
-        rowText = NSMutableAttributedString(string: first + " " + last + " " + place)
-        rowText.addAttribute(NSFontAttributeName, value: UIFont(name:"Georgia",size:10.0)!,range: NSRange(location: startPlace,length: lengthPlace))
-        
-        if StudentInformation.studentInformationArray.count == 0 {
-            return cell
-        } else {
-            cell.setCell(rowText)
-        }
+            rowText = NSMutableAttributedString(string: first + " " + last + " " + place)
+            rowText.addAttribute(NSFontAttributeName, value: UIFont(name:"Georgia",size:10.0)!,range: NSRange(location: startPlace,length: lengthPlace))
             
-        return cell
+        }
+        
+            if StudentInformation.studentInformationArray.count == 0 {
+                return cell
+            } else {
+                cell.setCell(rowText)
+            }
+            
+            return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -137,6 +141,12 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     @IBAction func logoutPressed() {
+        
+        if CurrentUser.facebookToken != nil {
+            let loginManager = FBSDKLoginManager()
+            loginManager.logOut()
+        }
+        
         UdacityClient.sharedInstance().logout { (result, error) -> () in
             if let result = result {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)

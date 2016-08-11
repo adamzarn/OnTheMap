@@ -88,7 +88,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     }
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        
+        self.activityIndicator.hidden = false
+        self.activityIndicator.startAnimating()
+        
         UdacityClient.sharedInstance().FBLogin(currentAccessToken().tokenString, completion: { (result, error) -> () in
+            CurrentUser.facebookToken = self.currentAccessToken().tokenString
             if let result = result {
                 if let account = result["account"] {
                     CurrentUser.userID = account["key"]!
@@ -123,6 +128,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     }
     
     @IBAction func loginPressed(sender: AnyObject) {
+        
+        CurrentUser.facebookToken = ""
         
         self.errorLabel.text = ""
         

@@ -31,25 +31,23 @@
 		<string>armv7</string>
 	</array>
 	<key>FacebookAppID</key>
-	<string>274169709628525</string>
+	<string>365362206864879</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbauth2</string>
 	</array>
 	<key>FacebookDisplayName</key>
-	<string>OnTheMap</string>
+	<string>onthemap</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb274169709628525</string>
+				<string>fb365362206864879</string>
 			</array>
 		</dict>
 	</array>
